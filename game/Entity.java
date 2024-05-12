@@ -15,13 +15,7 @@ public abstract class Entity {
 	public void death() {
 		this.cell.Remove(this);
 	}
-	// moves to cell
 	
-	public void move(Cell new_cell) throws OutOfRangeException {
-		this.cell = new_cell;
-	}
-	
-
 	public int getX(){
 		return this.cell.column;
 	}

@@ -25,7 +25,7 @@ public abstract class Human extends Entity {
     // TODO: consider case when human needs to choose who gets the food.
     public abstract boolean shareFood(); 
 
-    @Override
+    
     public void move (Cell new_cell) throws OutOfRangeException {
         int x = super.getX();
         int y = super.getY();
@@ -34,7 +34,7 @@ public abstract class Human extends Entity {
         if (dist > speed) {
             throw new OutOfRangeException();    
         }
-        super.move(new_cell); 
+        this.cell = new_cell; 
 }
 
 }
