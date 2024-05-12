@@ -4,7 +4,7 @@ public abstract class Entity {
 
 
 	// reference to current sell
-	private Cell cell;
+	public Cell cell;
 
 	//Constructor
 	public Entity(Cell cell)
@@ -12,18 +12,21 @@ public abstract class Entity {
 		this.cell = cell; // x, y are same as that of the cell.
 	}
 	// removes element from cell
-	public void death() {
+	public void Death() {
 		this.cell.Remove(this);
 	}
 	
-	public int getX(){
+	public int GetX(){
 		return this.cell.column;
 	}
 
-	public int getY(){
+	public int GetY(){
 		return this.cell.row;
 	}
 
+	public void ChangeCell(Cell newCell){
+		this.cell = newCell;
+	}
 	
 
 	/*
