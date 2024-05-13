@@ -32,6 +32,7 @@ public abstract class Entity {
 
 	public void ChangeCell(Cell newCell){
 		this.cell = newCell;
+		cell.getBoard().MoveElement(this, cell, newCell);
 	}
 	
  
