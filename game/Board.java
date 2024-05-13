@@ -65,4 +65,8 @@ public class Board {
     public int getColumns() {
         return COLUMNS;
     }
+
+    public Cell getCell(int row, int column){
+        return Cells.get(row).get(column);
+    }
 }
