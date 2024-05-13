@@ -4,7 +4,7 @@ public abstract class Entity {
 
 
 	// reference to current sell
-	public Cell cell;
+	private  Cell cell;
 
 	//Constructor
 	public Entity(Cell cell)

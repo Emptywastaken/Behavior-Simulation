@@ -37,7 +37,7 @@ public abstract class Human extends Entity {
     public void Move(Cell new_cell) throws OutOfRangeException {
         int x = super.GetX();
         int y = super.GetX();
-        double dist = Math.sqrt(x*x + y*y);
+        double dist = Math.sqrt(Math.pow((new_cell.row-y), 2) + Math.pow((new_cell.column-x), 2));
 
         if(dist > speed) {
             throw new OutOfRangeException();    
