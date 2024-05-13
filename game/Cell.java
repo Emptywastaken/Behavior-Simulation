@@ -1,13 +1,15 @@
 package game;
 
+
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
+
 
                             // any element that "walks" on it whether that is a resource or a player
                             //TODO update code once player class is created
 
 public class Cell {
-    public int row;
-    public int column;
+    private int row;
+    private int column;
     private ArrayList<Entity> elements = new ArrayList<Entity>(); // TODO change the type to object once class is
                                                                     // created
 
@@ -15,6 +17,11 @@ public class Cell {
                          // them
         this.row = x; // Currently the values are not used but could become useful
         this.column = y;
+    }
+    
+
+    public boolean IsEmpty(){
+        return this.elements.isEmpty();
     }
 
     public int AddElement(Entity Element) { // TODO change the type to object once class is created
@@ -29,7 +36,7 @@ public class Cell {
         return elements.get(Element_i);
     }
 
-    public ArrayList<Entity> InCell() { // Returns the array containing all the elements in the cell
+    public ArrayList<Entity> getElements() { // Returns the array containing all the elements in the cell
         return elements;
     }
     public void Remove(Entity entity) {
@@ -42,5 +49,13 @@ public class Cell {
             elements.remove(Element_i);
         }
 
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }

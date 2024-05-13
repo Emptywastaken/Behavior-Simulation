@@ -23,7 +23,7 @@ public class Board {
 
     }
 
-    public void AddElement(int element, int row, int column) {
+    public void AddElement(Entity element, int row, int column) {
         Cells.get(row).get(column).AddElement(element);
     }
 
@@ -31,17 +31,30 @@ public class Board {
         Cells.get(row).get(column).Remove(element_i);
     }
 
+    public void MoveElement(Entity element, Cell currentCell, Cell destinationCell) {
+        // get coordinates of first cell
+        Cells.get(currentCell.getRow()).get(currentCell.getColumn()).Remove(element);
+        Cells.get(destinationCell.getRow()).get(destinationCell.getColumn()).AddElement(element);
+
+    }
+
     public void MoveElement(int element_i, int i_row, int i_col, int f_row, int f_col) {
-        int element = Cells.get(i_row).get(i_col).GetElement(element_i);
+        Entity element = Cells.get(i_row).get(i_col).GetElement(element_i);
         Cells.get(i_row).get(i_col).Remove(element_i);
         Cells.get(f_row).get(f_col).AddElement(element);
     }
+
+    
 
     public boolean SquareExist(int row, int column) {
         return ((-1 < row) && (row < rows) && (-1 < column) && (column < columns));
     }
 
-    public ArrayList<Integer> GetElements(int row, int column) {
-        return Cells.get(row).get(column).InCell();
+    public ArrayList<Entity> GetElements(Cell cell) {
+        return Cells.get(cell.getRow()).get(cell.getColumn()).getElements();
+    }
+
+    public ArrayList<Entity> GetElements(int row, int column) {
+        return Cells.get(row).get(column).getElements();
     }
 }

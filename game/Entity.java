@@ -1,10 +1,11 @@
 package game;
 
+
 public abstract class Entity {
 
 
 	// reference to current sell
-	private  Cell cell;
+	private Cell cell;
 
 	//Constructor
 	public Entity(Cell cell)
@@ -17,11 +18,15 @@ public abstract class Entity {
 	}
 	
 	public int GetX(){
-		return this.cell.column;
+		return this.cell.getColumn();
 	}
 
 	public int GetY(){
-		return this.cell.row;
+		return this.cell.getRow();
+	}
+
+	public Cell GetCell() {
+		return this.cell;
 	}
 
 	public void ChangeCell(Cell newCell){
