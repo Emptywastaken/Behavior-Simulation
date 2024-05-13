@@ -8,9 +8,12 @@ public class Food extends Entity {
         this.amount = amount;
 
     }
-
-    public void decreaseAmount(){
+    @Override
+    public void death(){
         amount--;
+        if (amount<=0){
+            super.death();
+        }
     }
 
     public int getAmount() {
