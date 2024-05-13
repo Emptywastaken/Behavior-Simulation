@@ -5,13 +5,13 @@ import java.util.ArrayList; //Board Class is made of a 2d arraylist that stores 
                             //TODO update code once player class is created
 
 public class Board {
-    private final int rows;
-    private final int columns;
+    private final int ROWS;
+    private final int COLUMNS;
     private ArrayList<ArrayList<Cell>> Cells = new ArrayList<ArrayList<Cell>>();
 
     Board(int rows, int columns) { // Constructor creates a Rows x Columns Array and stores it as Cells
-        this.rows = rows;
-        this.columns = columns;
+        this.ROWS = rows;
+        this.COLUMNS = columns;
         for (int i = 0; i < rows; i++) {
             ArrayList<Cell> NewColumn = new ArrayList<Cell>();
             for (int j = 0; j < columns; j++) {
@@ -47,7 +47,7 @@ public class Board {
     
 
     public boolean SquareExist(int row, int column) {
-        return ((-1 < row) && (row < rows) && (-1 < column) && (column < columns));
+        return ((-1 < row) && (row < ROWS) && (-1 < column) && (column < COLUMNS));
     }
 
     public ArrayList<Entity> GetElements(Cell cell) {
@@ -56,5 +56,13 @@ public class Board {
 
     public ArrayList<Entity> GetElements(int row, int column) {
         return Cells.get(row).get(column).getElements();
+    }
+
+    public int getRows() {
+        return ROWS;
+    }
+
+    public int getColumns() {
+        return COLUMNS;
     }
 }

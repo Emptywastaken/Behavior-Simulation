@@ -5,12 +5,13 @@ public abstract class Entity {
 
 
 	// reference to current sell
-	private Cell cell;
+	private  Cell cell;
 
 	//Constructor
 	public Entity(Cell cell)
 	{
-		this.cell = cell; // x, y are same as that of the cell.
+		this.cell = cell;
+		 // x, y are same as that of the cell.
 	}
 	// removes element from cell
 	public void Death() {
@@ -33,20 +34,7 @@ public abstract class Entity {
 		this.cell = newCell;
 	}
 	
-
-	/*
-	public enum Direction {
-		UP,
-		RIGHT,
-		DOWN,
-		LEFT;
-	}
-
-	public enum State {
-		DEAD,
-		ACTIVE; 
-	}
-	*/
+ 
 
 
 }

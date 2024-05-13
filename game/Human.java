@@ -47,21 +47,36 @@ public abstract class Human extends Entity {
         super.ChangeCell(new_cell);
     }   
 
-    public ArrayList<Cell> targetInCell(Entity neededEntity) {
+    // returns a list of all cells with foods in the visible radius
+    // TODO check for tuples or smth similar in order to be able to priorities cells by direction 
+    public ArrayList<Cell> foodInCell() {
         // loops through each cell in the vision radius.
-        // TODO implement a way to loop through cells using board
-        // Overload move element so cell objects can be passed directly
-        Class cls = neededEntity.getClass();
-        int positionX = super.GetX()
-        for (int i = 0; i < rows; i++) {
-            ArrayList<Cell> NewColumn = new ArrayList<Cell>();
-            for (int j = 0; j < columns; j++) {
-                Cell s = new Cell(i, j);
-                NewColumn.add(s);
+        
+        int positionX = super.GetX();
+        int positionY = super.GetY();
+
+        int yStartingPoint = Math.min(positionY-vision, 0);
+        int yEndPoint = Math.max(positionY+vision, this.GetCell().boardHeight());
+        int xStartingPoint = Math.min(positionX-vision, 0);
+        int xEndPoint = Math.max(positionX+vision, this.GetCell().boardWidth());
+
+        Board BOARD = this.GetCell().getBoard();
+        ArrayList<Cell> returnedCells = new ArrayList<Cell>();
+        // need reference to board for this one
+        for (int i = yStartingPoint; i <= yEndPoint; i++) {   
+            for (int j= xStartingPoint; j <= xEndPoint; j++) {
+                Cell cell = BOARD.getCell(i, j);
+
+                if(cell.isEmpty()) {
+                    continue;
+                } if(Math.floor(Helper.getDistance(i, positionX, j, positionY)) <= vision) {
+                    continue;
+                } if(cell.containsFood()){
+                    returnedCells.add(cell);
+                }     
             }
-            Cells.add(NewColumn);
         }
-        return
+        return returnedCells;
     } 
 
 

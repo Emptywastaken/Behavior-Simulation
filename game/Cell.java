@@ -8,19 +8,21 @@ import java.util.ArrayList; // Class used to define the object the board is made
                             //TODO update code once player class is created
 
 public class Cell {
-    private int row;
-    private int column;
+    private Board BOARD;
+    private final int ROW;
+    private final int COLUMN;
     private ArrayList<Entity> elements = new ArrayList<Entity>(); // TODO change the type to object once class is
                                                                     // created
 
-    Cell(int x, int y) { // Constructor that takes the row, column coordinates of the Cell and stores
+    Cell(int x, int y) { // Constructor that takes the ROW, column coordinates of the Cell and stores
                          // them
-        this.row = x; // Currently the values are not used but could become useful
-        this.column = y;
+        this.ROW = x; // Currently the values are not used but could become useful
+        this.COLUMN = y;
     }
     
+    
 
-    public boolean IsEmpty(){
+    public boolean isEmpty(){
         return this.elements.isEmpty();
     }
 
@@ -50,12 +52,31 @@ public class Cell {
         }
 
     }
+    public boolean containsFood(){ //checks whether cell contains food.
+        for (Entity i : this.elements){
+        return i instanceof Food;
+    }
+        return false;
+    }
 
     public int getRow() {
-        return row;
+        return ROW;
     }
 
     public int getColumn() {
-        return column;
+        return COLUMN;
     }
+
+    public int boardWidth() {
+        return BOARD.getColumns();
+    }
+
+    public int boardHeight() {
+        return BOARD.getRows();
+    }
+
+    public Board getBoard() {
+        return BOARD;
+    }
+
 }
