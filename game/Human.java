@@ -23,14 +23,14 @@ public abstract class Human extends Entity {
 
     // Pick direction function depends on the character of the human
     // greedy, generous etc...
-    public abstract Cell PickDirection();
-    public abstract boolean ToEat();
+    public abstract Cell pickDirection();
+    public abstract boolean toEat();
 
     // TODO: consider case when human needs to choose who gets the food.
-    public abstract boolean ShareFood(); 
+    public abstract boolean shareFood(); 
     
     // added in case we consider more factors when checking for replication
-    public abstract void Replicate();
+    public abstract void replicate();
     
     public void Move(Cell new_cell) throws OutOfRangeException {
         int x = super.getX();
@@ -66,7 +66,7 @@ public abstract class Human extends Entity {
 
                 if(cell.isEmpty()) {
                     continue;
-                } if(Math.floor(Helper.getDistance(i, positionX, j, positionY)) <= vision) {
+                } if(Helper.getDistance(i, positionX, j, positionY) > vision) {
                     continue;
                 } if(cell.containsFood() != -1){
                     returnedCells.add(cell);
@@ -75,6 +75,38 @@ public abstract class Human extends Entity {
         }
         return returnedCells;
     } 
+
+    // returns all neighbouring players
+    public ArrayList<Entity> getNeighboors() {
+
+        int x = super.getX();
+        int y = super.getY();
+
+        Board BOARD = this.GetCell().getBoard();
+        ArrayList<Entity> neighbours = new ArrayList<Entity>();
+        for (int i = y-1; i <= y+1; i++) {
+            for (int j = x-1; j < x; j++) {
+
+                if(i == x & j == y) {
+                    continue;
+                }
+                if(!BOARD.cellInRange(i, j)) {
+                    continue;
+                }
+
+                Cell cell = BOARD.getCell(i, j);
+                if (!cell.isEmpty()) {
+                    for (Entity entitiy : cell.getElements()){
+                        if (entitiy instanceof Human) {
+                            neighbours.add(entitiy);
+                        }
+                    }
+
+                }  
+            }
+        }
+        return neighbours;
+    }
 
 
     @Override
@@ -106,9 +138,15 @@ public abstract class Human extends Entity {
     
     public void decreaseHealth() {
         this.turnsLeft--;
+        if (turnsLeft<=0){
+            this.death();
+        }
     }
 
     public void decreaseHealth(int amount) {
         this.turnsLeft = this.turnsLeft - amount;
+        if(turnsLeft<=0){
+            this.death();
+        }
     }
 }

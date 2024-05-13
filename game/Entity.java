@@ -3,9 +3,8 @@ package game;
 
 public abstract class Entity {
 
-
 	// reference to current sell
-	private  Cell cell;
+	private Cell cell;
 
 	//Constructor
 	public Entity(Cell cell)
@@ -19,19 +18,19 @@ public abstract class Entity {
 	}
 	
 	public int getX(){
-		return this.cell.getColumn();
+		return cell.getColumn();
 	}
 
 	public int getY(){
-		return this.cell.getRow();
+		return cell.getRow();
 	}
 
 	public Cell GetCell() {
-		return this.cell;
+		return cell;
 	}
 
 	public void ChangeCell(Cell newCell){
-		this.cell = newCell;
+		cell = newCell;
 		cell.getBoard().MoveElement(this, cell, newCell);
 	}
 	

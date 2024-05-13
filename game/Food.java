@@ -8,6 +8,7 @@ public class Food extends Entity {
         this.amount = amount;
 
     }
+    
     @Override
     public void death(){
         amount--;

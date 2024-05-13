@@ -1,6 +1,7 @@
 package game;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
 

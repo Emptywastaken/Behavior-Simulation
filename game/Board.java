@@ -46,7 +46,7 @@ public class Board {
 
     
 
-    public boolean SquareExist(int row, int column) {
+    public boolean cellInRange(int row, int column) {
         return ((-1 < row) && (row < ROWS) && (-1 < column) && (column < COLUMNS));
     }
 
