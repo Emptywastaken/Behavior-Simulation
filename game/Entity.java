@@ -14,15 +14,15 @@ public abstract class Entity {
 		 // x, y are same as that of the cell.
 	}
 	// removes element from cell
-	public void Death() {
+	public void death() {
 		this.cell.Remove(this);
 	}
 	
-	public int GetX(){
+	public int getX(){
 		return this.cell.getColumn();
 	}
 
-	public int GetY(){
+	public int getY(){
 		return this.cell.getRow();
 	}
 

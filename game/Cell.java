@@ -52,11 +52,13 @@ public class Cell {
         }
 
     }
-    public boolean containsFood(){ //checks whether cell contains food.
-        for (Entity i : this.elements){
-        return i instanceof Food;
-    }
-        return false;
+    public int containsFood(){ //checks whether cell contains food.
+        for (int i = 0; i < elements.size(); i ++) {
+            if(elements.get(i) instanceof Food) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public int getRow() {
