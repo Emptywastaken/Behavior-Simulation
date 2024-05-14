@@ -15,7 +15,7 @@ public class Board {
         for (int i = 0; i < rows; i++) {
             ArrayList<Cell> NewColumn = new ArrayList<Cell>();
             for (int j = 0; j < columns; j++) {
-                Cell s = new Cell(i, j);
+                Cell s = new Cell(i, j, this);
                 NewColumn.add(s);
             }
             Cells.add(NewColumn);
@@ -44,8 +44,6 @@ public class Board {
         Cells.get(f_row).get(f_col).AddElement(element);
     }
 
-    
-
     public boolean cellInRange(int row, int column) {
         return ((-1 < row) && (row < ROWS) && (-1 < column) && (column < COLUMNS));
     }
@@ -66,7 +64,45 @@ public class Board {
         return COLUMNS;
     }
 
-    public Cell getCell(int row, int column){
+    public Cell getCell(int row, int column) {
         return Cells.get(row).get(column);
+    }
+
+    public ArrayList<Entity> getVision(Entity human, int vision) {
+        int row = human.getY();
+        int column = human.getX();
+        // int vision = human.getVision();
+        ArrayList<Entity> viewedEntity = new ArrayList<>();
+        ArrayList<Entity> Elements = new ArrayList<>();
+
+        for (int i = 0; i < vision + 1; i++) {
+            if ((cellInRange(row + vision - i, column)) && (i != vision)) {
+                Elements = Cells.get(row + vision - i).get(column).getElements();
+                viewedEntity.addAll(Elements);
+            }
+            if ((cellInRange(row - vision + i, column)) && (i != vision)) {
+                Elements = Cells.get(row - vision + i).get(column).getElements();
+                viewedEntity.addAll(Elements);
+            }
+            for (int j = 1; j < i + 1; j++) {
+                if (cellInRange(row + vision - i, column + j)) {
+                    Elements = Cells.get(row + vision - i).get(column + j).getElements();
+                    viewedEntity.addAll(Elements);
+                }
+                if ((cellInRange(row + vision - i, column - j)) && (i != vision)) {
+                    Elements = Cells.get(row + vision - i).get(column - j).getElements();
+                    viewedEntity.addAll(Elements);
+                }
+                if ((cellInRange(row - vision + i, column + j)) && (i != vision)) {
+                    Elements = Cells.get(row - vision + i).get(column + j).getElements();
+                    viewedEntity.addAll(Elements);
+                }
+                if (cellInRange(row - vision + i, column - j)) {
+                    Elements = Cells.get(row - vision + i).get(column - j).getElements();
+                    viewedEntity.addAll(Elements);
+                }
+            }
+        }
+        return viewedEntity;
     }
 }

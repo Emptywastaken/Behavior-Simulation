@@ -1,29 +1,26 @@
 package game;
 
-
 import java.lang.reflect.Array;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
-
-                            // any element that "walks" on it whether that is a resource or a player
-                            //TODO update code once player class is created
+// any element that "walks" on it whether that is a resource or a player
+//TODO update code once player class is created
 
 public class Cell {
     private Board BOARD;
     private final int ROW;
     private final int COLUMN;
     private ArrayList<Entity> elements = new ArrayList<Entity>(); // TODO change the type to object once class is
-                                                                    // created
+                                                                  // created
 
-    Cell(int x, int y) { // Constructor that takes the ROW, column coordinates of the Cell and stores
-                         // them
+    Cell(int x, int y, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores
+        // them
         this.ROW = x; // Currently the values are not used but could become useful
         this.COLUMN = y;
+        this.BOARD = board;
     }
-    
-    
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.elements.isEmpty();
     }
 
@@ -42,8 +39,9 @@ public class Cell {
     public ArrayList<Entity> getElements() { // Returns the array containing all the elements in the cell
         return elements;
     }
+
     public void Remove(Entity entity) {
-            elements.remove(entity);
+        elements.remove(entity);
     }
 
     // removes by object
@@ -53,9 +51,10 @@ public class Cell {
         }
 
     }
-    public int containsFood(){ //checks whether cell contains food.
-        for (int i = 0; i < elements.size(); i ++) {
-            if(elements.get(i) instanceof Food) {
+
+    public int containsFood() { // checks whether cell contains food.
+        for (int i = 0; i < elements.size(); i++) {
+            if (elements.get(i) instanceof Food) {
                 return i;
             }
         }
