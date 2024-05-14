@@ -10,8 +10,8 @@ public class Cell {
     private Board BOARD;
     private final int ROW;
     private final int COLUMN;
-    private ArrayList<Entity> elements = new ArrayList<Entity>(); // TODO change the type to object once class is
-                                                                  // created
+    private ArrayList<Entity> elements = new ArrayList<Entity>();
+    private boolean food = false;
 
     Cell(int x, int y, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores
         // them
@@ -71,6 +71,18 @@ public class Cell {
 
     public Board getBoard() {
         return BOARD;
+    }
+
+    public boolean hasFood() {
+        return food;
+    }
+
+    public void foodAdded() {
+        food = true;
+    }
+
+    public void foodRemoved() {
+        food = false;
     }
 
 }
