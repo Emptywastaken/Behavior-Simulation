@@ -69,14 +69,6 @@ public class Cell {
         return COLUMN;
     }
 
-    public int boardWidth() {
-        return BOARD.getColumns();
-    }
-
-    public int boardHeight() {
-        return BOARD.getRows();
-    }
-
     public Board getBoard() {
         return BOARD;
     }

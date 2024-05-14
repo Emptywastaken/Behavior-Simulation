@@ -7,7 +7,7 @@ public class Test {
         Entity entity2 = new Entity(board.getCell(1, 2));
         Entity entity3 = new Entity(board.getCell(2, 2));
         Entity entity4 = new Entity(board.getCell(2, 2));
-        System.out.println(board.getVision(entity1, 10));
+        System.out.println(board.getVision(entity1, 2));
 
     }
 
