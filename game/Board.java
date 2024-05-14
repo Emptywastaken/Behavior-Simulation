@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList; //Board Class is made of a 2d arraylist that stores all the cells,
                             // the number of rows and columns is stored
-                            //TODO update code once player class is created
 
 public class Board {
     private final int ROWS;

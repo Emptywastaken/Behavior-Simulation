@@ -1,10 +1,8 @@
 package game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
 // any element that "walks" on it whether that is a resource or a player
-//TODO update code once player class is created
 
 public class Cell {
     private Board BOARD;
@@ -24,7 +22,7 @@ public class Cell {
         return this.elements.isEmpty();
     }
 
-    public int AddElement(Entity Element) { // TODO change the type to object once class is created
+    public int AddElement(Entity Element) {
         elements.add(Element);
         return elements.size() - 1; // Array size is returned to store element location in the array
                                     // A way to keep track of the location after previous elements have been removed

@@ -13,7 +13,7 @@ public class Entity {
 	}
 
 	// removes element from cell
-	public void death() {
+	public void Remove() {
 		this.cell.Remove(this);
 	}
 
@@ -33,5 +33,4 @@ public class Entity {
 		cell = newCell;
 		cell.getBoard().MoveElement(this, cell, newCell);
 	}
-
 }

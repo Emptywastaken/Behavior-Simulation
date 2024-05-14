@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public abstract class Human extends Entity {
 
     private boolean readyToReplicate = false;
-    private boolean hasFood = false;
     private int turnsLeft;
     private final int stregth;
     private final int vision;
     private final int speed;
+    private boolean alive = true;
 
     public Human(Cell cell, int vision, int stregth, int turnsLeft, int speed) {
         super(cell);
@@ -17,6 +17,15 @@ public abstract class Human extends Entity {
         this.stregth = stregth;
         this.turnsLeft = turnsLeft;
         this.speed = speed;
+    }
+
+    public void death() {
+        this.Remove();
+        alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     // Pick direction function depends on the character of the human
@@ -110,13 +119,6 @@ public abstract class Human extends Entity {
         return neighbours;
     }
 
-    @Override
-    public void death() {
-        if (turnsLeft <= 0) {
-            super.death();
-        }
-    }
-
     // TODO: randomness eg.(lambda*stregthDiffernce) chance to alternate the
     // outcome.
     public void Attack(Human target) {
@@ -127,15 +129,6 @@ public abstract class Human extends Entity {
             target.decreaseHealth();
         } else {
             this.decreaseHealth();
-        }
-    }
-
-    public void pickFood() {
-        // change player's status and removes food.
-        int foodIndx = super.GetCell().containsFood();
-        if (foodIndx != -1) {
-            this.hasFood = true;
-            this.GetCell().GetElement(foodIndx).death();
         }
     }
 
