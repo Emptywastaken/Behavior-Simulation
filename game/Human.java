@@ -70,8 +70,6 @@ public class Human extends Entity {
     }
 
     public void makeMove() {
-        if (!this.getCell().hasFood()){
             moveCell(nextCell);
-        }
     }
 }
