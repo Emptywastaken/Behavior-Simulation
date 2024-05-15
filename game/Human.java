@@ -10,6 +10,7 @@ public abstract class Human extends Entity {
     private final int vision;
     private final int speed;
     private boolean alive = true;
+    private Cell nextCell;
 
     public Human(Cell cell, int vision, int stregth, int turnsLeft, int speed) {
         super(cell);
@@ -40,15 +41,12 @@ public abstract class Human extends Entity {
     // added in case we consider more factors when checking for replication
     public abstract void replicate();
 
-    public void Move(Cell new_cell) throws OutOfRangeException {
-        int x = super.getX();
-        int y = super.getX();
-        double dist = Helper.getDistance(x, y, new_cell.getColumn(), new_cell.getRow());
+    public void pickMove(){
+        nextCell =  this.GetCell(); // must add logic to pick next cell
+    }
 
-        if (dist > speed) {
-            throw new OutOfRangeException();
-        }
-        super.ChangeCell(new_cell);
+    public void Move() throws OutOfRangeException {
+        super.ChangeCell(nextCell);
     }
 
     // returns a list of all cells with foods in the visible radius

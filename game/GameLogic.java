@@ -36,6 +36,15 @@ public class GameLogic {
         }
 
     }
+    
+    public void nextTurn(){ //TODO add logic for different speeds, every player picks the move at the same time then they all make it
+        for (int i = 0; i < playeArrayList.size(); i++){
+            playeArrayList.get(i).pickMove();
+        }
+        for (int i = 0; i < playeArrayList.size(); i++){
+            playeArrayList.get(i).makeMove();
+        }
+    }
 
     private int randomPosition() {
         Random rand = new Random();

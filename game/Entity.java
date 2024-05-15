@@ -4,6 +4,7 @@ public class Entity {
 
 	// reference to current sell
 	private Cell cell;
+	private Cell nextCell; //here just for testing
 
 	// Constructor
 	public Entity(Cell cell) {
@@ -32,5 +33,12 @@ public class Entity {
 	public void ChangeCell(Cell newCell) {
 		cell = newCell;
 		cell.getBoard().MoveElement(this, cell, newCell);
+	}
+
+	public void pickMove(){
+		nextCell = cell; //just for testing, will be implemented correctly in human class
+	}
+	public void makeMove(){
+		this.ChangeCell(nextCell);
 	}
 }

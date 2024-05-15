@@ -50,15 +50,6 @@ public class Cell {
 
     }
 
-    public int containsFood() { // checks whether cell contains food.
-        for (int i = 0; i < elements.size(); i++) {
-            if (elements.get(i) instanceof Food) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public int getRow() {
         return ROW;
     }
