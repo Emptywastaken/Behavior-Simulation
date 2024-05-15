@@ -6,7 +6,7 @@ import java.util.Random;
 public class GameLogic {
     private ArrayList<Human> playeArrayList = new ArrayList<>();
     private int foodCount;
-    private Board board;
+    private final Board board;
 
     GameLogic(Board board, int initialPlayers, int foodAmount) {
         this.board = board;
