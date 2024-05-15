@@ -31,8 +31,8 @@ public class Human extends Entity {
         this.ChangeCell(newCell);
 	}
     private int getDistance(Cell cell){
-        int x = Math.abs(cell.getColumn() - this.getX());
-        int y = Math.abs(cell.getRow() - this.getY());
+        int x = Math.abs(cell.getRow() - this.getRow());
+        int y = Math.abs(cell.getColumn() - this.getColumn());
         return x+y;
     }
     public void pickMove(){
@@ -47,30 +47,31 @@ public class Human extends Entity {
                 closestFood = currentFood;
                 }
         }
-        int x = closestFood.getRow();
-        int y = closestFood.getColumn();
-        int x_moves = x - this.getX();
-        int y_moves = y - this.getY();
-        if (y_moves != 0){ //Randomness needs to be added to the moves
-            if (y_moves < 0) {
-                nextCell = this.getCell().getBoard().getCell(this.getX(), this.getY() - 1);
+        int row = closestFood.getRow();
+        int column = closestFood.getColumn();
+        int row_moves = row - this.getRow();
+        int column_moves = column - this.getColumn();
+        if (column_moves != 0){ //Randomness needs to be added to the moves
+            if (column_moves < 0) {
+                nextCell = this.getCell().getBoard().getCell(this.getRow(), this.getColumn() - 1);
             }
             else{
-                nextCell = this.getCell().getBoard().getCell(this.getX(), this.getY() + 1);
+                nextCell = this.getCell().getBoard().getCell(this.getRow(), this.getColumn() + 1);
             }
         }
-        else if (x_moves != 0){
-            if (x_moves < 0) {
-                nextCell = this.getCell().getBoard().getCell(this.getY(), this.getX() - 1);
+        else if (row_moves != 0){
+            if (row_moves < 0) {
+                nextCell = this.getCell().getBoard().getCell(this.getRow() - 1, this.getColumn());
             }
             else{
-                nextCell = this.getCell().getBoard().getCell(this.getY(), this.getX() + 1);
+                nextCell = this.getCell().getBoard().getCell(this.getRow() + 1, this.getColumn());
             }
         }
     }
 
     public void makeMove() {
-        moveCell(nextCell);
-        nextCell = this.getCell();
+        if (!this.getCell().hasFood()){
+            moveCell(nextCell);
+        }
     }
 }

@@ -60,8 +60,8 @@ public class Board {
         return Cells.get(row).get(column);
     }
     public ArrayList<Cell> getFoodVision(Human human, int vision) {
-        int row = human.getY();
-        int column = human.getX();
+        int row = human.getColumn();
+        int column = human.getRow();
         // int vision = human.getVision();
         ArrayList<Cell> food = new ArrayList<>();
 

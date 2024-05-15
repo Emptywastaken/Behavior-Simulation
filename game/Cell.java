@@ -11,10 +11,10 @@ public class Cell {
     private ArrayList<Human> humans = new ArrayList<Human>();
     private boolean food = false;
 
-    Cell(int x, int y, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores
+    Cell(int row, int column, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores
         // them
-        this.ROW = x; // Currently the values are not used but could become useful
-        this.COLUMN = y;
+        this.ROW = row; // Currently the values are not used but could become useful
+        this.COLUMN = column;
         this.BOARD = board;
     }
 

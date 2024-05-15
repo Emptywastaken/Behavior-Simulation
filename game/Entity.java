@@ -15,11 +15,11 @@ public class Entity {
 	public Cell getCell() {
 		return this.cell;
 	}
-	public int getX() {
+	public int getRow() {
 		return cell.getRow();
 	}
 
-	public int getY() {
+	public int getColumn() {
 		return cell.getColumn();
 	}
 

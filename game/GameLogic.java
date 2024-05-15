@@ -14,11 +14,11 @@ public class GameLogic {
         for (int i = 0; i < initialPlayers; i++) {
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (randomZeroOrOne() == 0) { // Randomly pick if the player is greedy or social, currently not implemented
-                Human player = new Human(cell, 2, i);
+                Human player = new Human(cell, 20, i);
                 playeArrayList.add(player);
                 board.AddHuman(player, cell);
             } else {
-                Human player = new Human(cell, 2, i);
+                Human player = new Human(cell, 20, i);
                 playeArrayList.add(player);
                 board.AddHuman(player, cell);
             
@@ -43,8 +43,7 @@ public class GameLogic {
             playeArrayList.get(i).pickMove();
         }
         for (int i = 0; i < playeArrayList.size(); i++){
-            playeArrayList.get(i).makeMove();
-        }
+            playeArrayList.get(i).makeMove();}
     }
 
     private int randomPosition() {
