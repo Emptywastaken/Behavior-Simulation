@@ -6,13 +6,13 @@ import java.util.ArrayList; //Board Class is made of a 2d arraylist that stores 
 public class Board {
     private final int ROWS;
     private final int COLUMNS;
-    private ArrayList<ArrayList<Cell>> Cells = new ArrayList<ArrayList<Cell>>();
+    private final ArrayList<ArrayList<Cell>> Cells = new ArrayList<>();
 
     Board(int rows, int columns) { // Constructor creates a Rows x Columns Array and stores it as Cells
         this.ROWS = rows;
         this.COLUMNS = columns;
         for (int i = 0; i < rows; i++) {
-            ArrayList<Cell> NewColumn = new ArrayList<Cell>();
+            ArrayList<Cell> NewColumn = new ArrayList<>();
             for (int j = 0; j < columns; j++) {
                 Cell s = new Cell(i, j, this);
                 NewColumn.add(s);
@@ -22,37 +22,30 @@ public class Board {
 
     }
 
-    public void AddElement(Entity element, int row, int column) {
-        Cells.get(row).get(column).AddElement(element);
+    public void AddHuman(Human human, Cell cell) {
+        Cells.get(cell.getRow()).get(cell.getColumn()).AddHuman(human);
     }
 
-    public void RemoveElement(int element_i, int row, int column) {
-        Cells.get(row).get(column).Remove(element_i);
+    public void RemoveHuman(Human human, int row, int column) {
+        Cells.get(row).get(column).RemoveHuman(human);
     }
 
-    public void MoveElement(Entity element, Cell currentCell, Cell destinationCell) {
+    public void MoveElement(Human human, Cell currentCell, Cell destinationCell) {
         // get coordinates of first cell
-        Cells.get(currentCell.getRow()).get(currentCell.getColumn()).Remove(element);
-        Cells.get(destinationCell.getRow()).get(destinationCell.getColumn()).AddElement(element);
+        Cells.get(currentCell.getRow()).get(currentCell.getColumn()).RemoveHuman(human);
+        Cells.get(destinationCell.getRow()).get(destinationCell.getColumn()).AddHuman(human);
 
     }
-
-    public void MoveElement(int element_i, int i_row, int i_col, int f_row, int f_col) {
-        Entity element = Cells.get(i_row).get(i_col).GetElement(element_i);
-        Cells.get(i_row).get(i_col).Remove(element_i);
-        Cells.get(f_row).get(f_col).AddElement(element);
-    }
-
     public boolean cellInRange(int row, int column) {
         return ((-1 < row) && (row < ROWS) && (-1 < column) && (column < COLUMNS));
     }
 
-    public ArrayList<Entity> GetElements(Cell cell) {
-        return Cells.get(cell.getRow()).get(cell.getColumn()).getElements();
+    public ArrayList<Human> GetHumans(Cell cell) {
+        return Cells.get(cell.getRow()).get(cell.getColumn()).getHumans();
     }
 
-    public ArrayList<Entity> GetElements(int row, int column) {
-        return Cells.get(row).get(column).getElements();
+    public ArrayList<Human> GetHumans(int row, int column) {
+        return Cells.get(row).get(column).getHumans();
     }
 
     public int getRows() {
@@ -66,42 +59,46 @@ public class Board {
     public Cell getCell(int row, int column) {
         return Cells.get(row).get(column);
     }
-
-    public ArrayList<Entity> getVision(Entity human, int vision) {
+    public ArrayList<Cell> getFoodVision(Human human, int vision) {
         int row = human.getY();
         int column = human.getX();
         // int vision = human.getVision();
-        ArrayList<Entity> viewedEntity = new ArrayList<>();
-        ArrayList<Entity> Elements = new ArrayList<>();
+        ArrayList<Cell> food = new ArrayList<>();
 
         for (int i = 0; i < vision + 1; i++) {
-            if ((cellInRange(row + vision - i, column)) && (i != vision)) {
-                Elements = Cells.get(row + vision - i).get(column).getElements();
-                viewedEntity.addAll(Elements);
+            if (cellInRange(row + vision - i, column)) {
+                if (Cells.get(row + vision - i).get(column).hasFood()){
+                    food.add(Cells.get(row + vision - i).get(column));
+                }
             }
             if ((cellInRange(row - vision + i, column)) && (i != vision)) {
-                Elements = Cells.get(row - vision + i).get(column).getElements();
-                viewedEntity.addAll(Elements);
+                if (Cells.get(row - vision + i).get(column).hasFood()){
+                    food.add(Cells.get(row - vision + i).get(column));
+                }
             }
             for (int j = 1; j < i + 1; j++) {
                 if (cellInRange(row + vision - i, column + j)) {
-                    Elements = Cells.get(row + vision - i).get(column + j).getElements();
-                    viewedEntity.addAll(Elements);
+                    if (Cells.get(row + vision - i).get(column + j).hasFood()){
+                        food.add(Cells.get(row + vision - i).get(column + j));
+                    }
                 }
                 if ((cellInRange(row + vision - i, column - j)) && (i != vision)) {
-                    Elements = Cells.get(row + vision - i).get(column - j).getElements();
-                    viewedEntity.addAll(Elements);
+                    if (Cells.get(row + vision - i).get(column - j).hasFood()){
+                        food.add(Cells.get(row + vision - i).get(column - j));
+                    }
                 }
                 if ((cellInRange(row - vision + i, column + j)) && (i != vision)) {
-                    Elements = Cells.get(row - vision + i).get(column + j).getElements();
-                    viewedEntity.addAll(Elements);
+                    if (Cells.get(row - vision + i).get(column + j).hasFood()){
+                        food.add(Cells.get(row - vision + i).get(column + j));
+                    }
                 }
                 if (cellInRange(row - vision + i, column - j)) {
-                    Elements = Cells.get(row - vision + i).get(column - j).getElements();
-                    viewedEntity.addAll(Elements);
+                    if (Cells.get(row - vision + i).get(column - j).hasFood()){
+                        food.add(Cells.get(row - vision + i).get(column - j));
+                    }
                 }
             }
         }
-        return viewedEntity;
+        return food;
     }
 }

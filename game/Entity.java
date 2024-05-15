@@ -9,21 +9,18 @@ public class Entity {
 	// Constructor
 	public Entity(Cell cell) {
 		this.cell = cell;
-		cell.getBoard().AddElement(this, cell.getRow(), cell.getColumn());
+
 		// x, y are same as that of the cell.
 	}
-
-	// removes element from cell
-	public void Remove() {
-		this.cell.Remove(this);
+	public Cell getCell() {
+		return this.cell;
 	}
-
 	public int getX() {
-		return cell.getColumn();
+		return cell.getRow();
 	}
 
 	public int getY() {
-		return cell.getRow();
+		return cell.getColumn();
 	}
 
 	public Cell GetCell() {
@@ -32,13 +29,5 @@ public class Entity {
 
 	public void ChangeCell(Cell newCell) {
 		cell = newCell;
-		cell.getBoard().MoveElement(this, cell, newCell);
-	}
-
-	public void pickMove(){
-		nextCell = cell; //just for testing, will be implemented correctly in human class
-	}
-	public void makeMove(){
-		this.ChangeCell(nextCell);
 	}
 }

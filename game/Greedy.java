@@ -1,6 +1,6 @@
 package game;
 
-public class Greedy extends Human{
+/*public class Greedy extends Human{
 
     public Greedy(Cell cell, int vision, int stregth, int turnsLeft, int speed) {
         super(cell, vision, stregth, turnsLeft, speed);
@@ -27,3 +27,4 @@ public class Greedy extends Human{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
+*/

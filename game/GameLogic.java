@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameLogic {
-    private ArrayList<Entity> playeArrayList = new ArrayList<>();
+    private ArrayList<Human> playeArrayList = new ArrayList<>();
     private int foodCount;
     private Board board;
 
@@ -12,14 +12,16 @@ public class GameLogic {
         this.board = board;
         this.foodCount = foodAmount;
         for (int i = 0; i < initialPlayers; i++) {
+            Cell cell = board.getCell(randomPosition(), randomPosition());
             if (randomZeroOrOne() == 0) { // Randomly pick if the player is greedy or social, currently not implemented
-                Cell cell = board.getCell(randomPosition(), randomPosition());
-                Entity player = new Entity(cell);
+                Human player = new Human(cell, 2, i);
                 playeArrayList.add(player);
+                board.AddHuman(player, cell);
             } else {
-                Cell cell = board.getCell(randomPosition(), randomPosition());
-                Entity player = new Entity(cell);
+                Human player = new Human(cell, 2, i);
                 playeArrayList.add(player);
+                board.AddHuman(player, cell);
+            
             }
         }
         int i = 0;
@@ -29,10 +31,9 @@ public class GameLogic {
                                                                            // at the end of a turn x food will be added
                                                                            // back
             if (!(cell.hasFood())) {
+                cell.foodAdded();
+                i++;
             }
-            Food food = new Food(cell);
-            cell.foodAdded();
-            i++;
         }
 
     }
@@ -56,7 +57,7 @@ public class GameLogic {
         return rand.nextInt(2);
     }
 
-    public ArrayList<Entity> getPlayers() {
+    public ArrayList<Human> getPlayers() {
         return playeArrayList;
     }
 }
