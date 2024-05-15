@@ -5,10 +5,10 @@ import java.util.ArrayList; // Class used to define the object the board is made
 // any element that "walks" on it whether that is a resource or a player
 
 public class Cell {
-    private Board BOARD;
+    private final Board BOARD;
     private final int ROW;
     private final int COLUMN;
-    private ArrayList<Human> humans = new ArrayList<Human>();
+    private ArrayList<Human> humans = new ArrayList<>();
     private boolean food = false;
 
     Cell(int row, int column, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores

@@ -3,9 +3,7 @@ package game;
 public class Entity {
 
 	// reference to current sell
-	private Cell cell;
-	private Cell nextCell; //here just for testing
-
+	protected Cell cell;
 	// Constructor
 	public Entity(Cell cell) {
 		this.cell = cell;
