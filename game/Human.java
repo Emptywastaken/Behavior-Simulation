@@ -50,7 +50,7 @@ public class Human extends Entity {
                 foodList.add(currentFood);
             }
         }
-        if (foodList.size() > 0) {
+        if (!foodList.isEmpty()) {
             pickedFood = randomCell(foodList);
         } else {
         }
