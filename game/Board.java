@@ -19,7 +19,6 @@ public class Board {
             }
             Cells.add(NewColumn);
         }
-
     }
 
     public void AddHuman(Human human, Cell cell) {
@@ -36,6 +35,7 @@ public class Board {
         Cells.get(destinationCell.getRow()).get(destinationCell.getColumn()).AddHuman(human);
 
     }
+
     public boolean cellInRange(int row, int column) {
         return ((-1 < row) && (row < ROWS) && (-1 < column) && (column < COLUMNS));
     }
@@ -59,6 +59,7 @@ public class Board {
     public Cell getCell(int row, int column) {
         return Cells.get(row).get(column);
     }
+
     public ArrayList<Cell> getFoodVision(Human human, int vision) {
         int row = human.getColumn();
         int column = human.getRow();
@@ -67,33 +68,33 @@ public class Board {
 
         for (int i = 0; i < vision + 1; i++) {
             if (cellInRange(row + vision - i, column)) {
-                if (Cells.get(row + vision - i).get(column).hasFood()){
+                if (Cells.get(row + vision - i).get(column).hasFood()) {
                     food.add(Cells.get(row + vision - i).get(column));
                 }
             }
             if ((cellInRange(row - vision + i, column)) && (i != vision)) {
-                if (Cells.get(row - vision + i).get(column).hasFood()){
+                if (Cells.get(row - vision + i).get(column).hasFood()) {
                     food.add(Cells.get(row - vision + i).get(column));
                 }
             }
             for (int j = 1; j < i + 1; j++) {
                 if (cellInRange(row + vision - i, column + j)) {
-                    if (Cells.get(row + vision - i).get(column + j).hasFood()){
+                    if (Cells.get(row + vision - i).get(column + j).hasFood()) {
                         food.add(Cells.get(row + vision - i).get(column + j));
                     }
                 }
                 if ((cellInRange(row + vision - i, column - j)) && (i != vision)) {
-                    if (Cells.get(row + vision - i).get(column - j).hasFood()){
+                    if (Cells.get(row + vision - i).get(column - j).hasFood()) {
                         food.add(Cells.get(row + vision - i).get(column - j));
                     }
                 }
                 if ((cellInRange(row - vision + i, column + j)) && (i != vision)) {
-                    if (Cells.get(row - vision + i).get(column + j).hasFood()){
+                    if (Cells.get(row - vision + i).get(column + j).hasFood()) {
                         food.add(Cells.get(row - vision + i).get(column + j));
                     }
                 }
                 if (cellInRange(row - vision + i, column - j)) {
-                    if (Cells.get(row - vision + i).get(column - j).hasFood()){
+                    if (Cells.get(row - vision + i).get(column - j).hasFood()) {
                         food.add(Cells.get(row - vision + i).get(column - j));
                     }
                 }

@@ -10,8 +10,11 @@ public class Cell {
     private final int COLUMN;
     private ArrayList<Human> humans = new ArrayList<>();
     private boolean food = false;
+    private ArrayList<Cell> neighbourCells = new ArrayList<>(); // neighborhood is only initialized, a method to create
+                                                                // it should be implemented
 
-    Cell(int row, int column, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and stores
+    Cell(int row, int column, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and
+                                             // stores
         // them
         this.ROW = row; // Currently the values are not used but could become useful
         this.COLUMN = column;

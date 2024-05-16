@@ -14,14 +14,14 @@ public class GameLogic {
         for (int i = 0; i < initialPlayers; i++) {
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (randomZeroOrOne() == 0) { // Randomly pick if the player is greedy or social, currently not implemented
-                Human player = new Human(cell, 20, i);
+                Human player = new Human(cell, 10, 5);
                 playeArrayList.add(player);
                 board.AddHuman(player, cell);
             } else {
-                Human player = new Human(cell, 20, i);
+                Human player = new Human(cell, 10, 5);
                 playeArrayList.add(player);
                 board.AddHuman(player, cell);
-            
+
             }
         }
         int i = 0;
@@ -37,13 +37,15 @@ public class GameLogic {
         }
 
     }
-    
-    public void nextTurn(){ //TODO add logic for different speeds, every player picks the move at the same time then they all make it
-        for (int i = 0; i < playeArrayList.size(); i++){
+
+    public void nextTurn() { // TODO add logic for different speeds, every player picks the move at the same
+                             // time then they all make it
+        for (int i = 0; i < playeArrayList.size(); i++) {
             playeArrayList.get(i).pickMove();
         }
-        for (int i = 0; i < playeArrayList.size(); i++){
-            playeArrayList.get(i).makeMove();}
+        for (int i = 0; i < playeArrayList.size(); i++) {
+            playeArrayList.get(i).makeMove();
+        }
     }
 
     private int randomPosition() {
