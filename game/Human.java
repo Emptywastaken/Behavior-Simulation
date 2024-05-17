@@ -94,9 +94,10 @@ public class Human extends Entity {
         currentSpeed = speed;
     }
 
-    public void reproduce() {
+    public Human reproduce() {
         Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, playerType);
         cell.getBoard().getCell(son.getRow(), son.getColumn()).AddHuman(son);
+        return son;
     }
 
     public int getType() {

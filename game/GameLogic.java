@@ -94,4 +94,9 @@ public class GameLogic {
     public ArrayList<Human> getPlayers() {
         return playeArrayList;
     }
+
+    public void reproduce(Human human) {
+        Human son = human.reproduce();
+        playeArrayList.add(son);
+    }
 }
