@@ -42,7 +42,7 @@ public class Human extends Entity {
     }
 
     public void pickMove() {
-        if (currentSpeed > 0) {
+        if ((currentSpeed > 0) && (!cell.hasFood())) {
             ArrayList<Cell> viewFood = cell.getBoard().getFoodVision(this, vision);
             Cell pickedFood = cell;
             ArrayList<Cell> foodList = new ArrayList<>();
