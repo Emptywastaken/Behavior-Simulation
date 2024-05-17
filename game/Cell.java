@@ -1,5 +1,6 @@
 package game;
 
+import java.text.CollationElementIterator;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
 // any element that "walks" on it whether that is a resource or a player
@@ -19,6 +20,29 @@ public class Cell {
         this.ROW = row; // Currently the values are not used but could become useful
         this.COLUMN = column;
         this.BOARD = board;
+    }
+
+    public void createNeighborhood() {
+        if (ROW == 0) {
+            neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));
+        } else if (ROW == BOARD.getRows() - 1) {
+            neighbourCells.add(BOARD.getCell(ROW - 1, COLUMN));
+        } else {
+            neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));
+            neighbourCells.add(BOARD.getCell(ROW - 1, COLUMN));
+        }
+        if (COLUMN == 0) {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN + 1));
+        } else if (COLUMN == BOARD.getColumns() - 1) {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN - 1));
+        } else {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN + 1));
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN - 1));
+        }
+    }
+
+    public ArrayList<Cell> getNeighborhood() {
+        return neighbourCells;
     }
 
     public boolean isEmpty() {
