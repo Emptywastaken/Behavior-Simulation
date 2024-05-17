@@ -9,12 +9,14 @@ public class Human extends Entity {
     private boolean alive = true;
     private Cell nextCell = cell;
     private int currentSpeed;
+    private int playerType;
 
-    public Human(Cell cell, int vision, int speed) {
+    public Human(Cell cell, int vision, int speed, int playerType) {
         super(cell);
         this.vision = vision;
         this.speed = speed;
         this.currentSpeed = speed;
+        this.playerType = playerType;
     }
 
     public void death() {
@@ -90,5 +92,14 @@ public class Human extends Entity {
 
     public void resetSpeed() {
         currentSpeed = speed;
+    }
+
+    public void reproduce() {
+        Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, playerType);
+        cell.getBoard().getCell(son.getRow(), son.getColumn()).AddHuman(son);
+    }
+
+    public int getType() {
+        return playerType;
     }
 }

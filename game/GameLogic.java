@@ -13,17 +13,15 @@ public class GameLogic {
         this.board = board;
         this.foodCount = foodAmount;
         for (int i = 0; i < initialPlayers; i++) {
+            Human player;
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (randomZeroOrOne() == 0) { // Randomly pick if the player is greedy or social, currently not implemented
-                Human player = new Human(cell, 3, 5);
-                playeArrayList.add(player);
-                board.AddHuman(player, cell);
+                player = new Human(cell, 3, 5, 0);
             } else {
-                Human player = new Human(cell, 3, 5);
-                playeArrayList.add(player);
-                board.AddHuman(player, cell);
-
+                player = new Human(cell, 3, 5, 1);
             }
+            playeArrayList.add(player);
+            board.AddHuman(player, cell);
         }
         int i = 0;
         while (i < foodCount) {
@@ -74,8 +72,7 @@ public class GameLogic {
 
     }
 
-    private void nextSubTurn() { // TODO add logic for different speeds, every player picks the move at the same
-                                 // time then they all make it
+    private void nextSubTurn() {
         for (int i = 0; i < playeArrayList.size(); i++) {
             playeArrayList.get(i).pickMove();
         }
