@@ -2,8 +2,8 @@ package game;
 
 public class Test {
     public static void main(String[] args) {
-        Board board = new Board(10, 10);
-        GameLogic gl = new GameLogic(board, 100, 100);
+        Board board = new Board(1000, 1000);
+        GameLogic gl = new GameLogic(board, 5000, 200000);
         gl.nextTurn();
         System.out.println(gl.getPlayers().size());
         gl.nextTurn();
@@ -15,13 +15,6 @@ public class Test {
         gl.nextTurn();
         System.out.println(gl.getPlayers().size());
         gl.nextTurn();
-        System.out.println(gl.getPlayers().size());
-        gl.nextTurn();
-        System.out.println(gl.getPlayers().size());
-        gl.nextTurn();
-        System.out.println(gl.getPlayers().size());
-        gl.nextTurn();
-        gl.reproduce(gl.getPlayers().get(0));
         System.out.println(gl.getPlayers().size());
     }
 }

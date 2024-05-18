@@ -10,6 +10,7 @@ public class Human extends Entity {
     private Cell nextCell = cell;
     private int currentSpeed;
     private final boolean social;
+    private final Random rand = new Random();
 
     public Human(Cell cell, int vision, int speed, boolean social) {
         super(cell);
@@ -75,7 +76,7 @@ public class Human extends Entity {
         if ((row_moves == 0) && (column_moves == 0)) { 
             return;
         }
-        boolean direction = Helper.randomizeMovement(row_moves, column_moves);
+        boolean direction = randomizeMovement(row_moves, column_moves);
         if (direction) {
             if (column_moves < 0) {
                 nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
@@ -113,5 +114,14 @@ public class Human extends Entity {
 
     public boolean isSocial() {
         return social;
+    }
+
+    private boolean randomizeMovement(int distanceRows, int distanceColumns) {
+        if (distanceRows == 0) {
+            return true;
+        } else if (distanceColumns == 0) {
+            return false;
+        }
+        return rand.nextBoolean();
     }
 }
