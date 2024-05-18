@@ -6,6 +6,7 @@ import java.util.Random;
 public class GameLogic {
     private ArrayList<Human> playersArrayList = new ArrayList<>();
     private ArrayList<Human> deadPlayerList = new ArrayList<>();
+    private ArrayList<Human> reproducePlayerList = new ArrayList<>();
 
     private final int FOODCOUNT;
     private int currentFood;
@@ -41,6 +42,7 @@ public class GameLogic {
         // resets speed for all alive players
         reset();
         spawnFood();
+        //System.out.println("b" + currentFood);
         for (int i = 0; i < MAXSPEED; i++) { 
             nextSubTurn();
         }
@@ -59,6 +61,8 @@ public class GameLogic {
             }
         }
         finalizeDeath();
+        reproduceAll();
+        //System.out.println("e" + currentFood);
     }
 
     private void nextSubTurn() {
@@ -106,13 +110,15 @@ public class GameLogic {
     private void deathInConflict(int indx1, int indx2, ArrayList<Human> conflictList) {
         for (int i = 0; i < conflictList.size(); i++) {
             if (i == indx1 || i == indx2) {
+                if (i == indx1) {
+                    reproducePlayerList.add((conflictList.get(i)));
+                }
                 continue;
             }
             deadPlayerList.add(conflictList.get(i));
             }
     }
     
-
     private void deathFromHunger() {
         // gets all dead players 
         for (int i = 0; i < playersArrayList.size(); i++) {
@@ -147,6 +153,17 @@ public class GameLogic {
         }
     }
 
+    private void reproduceAll() {
+        //System.out.println("init len" + playersArrayList.size());
+        //System.out.println("init rep" + reproducePlayerList.size());
+        for (int i = 0; i < reproducePlayerList.size(); i++) {
+            reproduce(reproducePlayerList.get(i));
+        }
+        
+        reproducePlayerList.clear();
+        //System.out.println("final len" + playersArrayList.size());
+    }
+
     private int randomPosition() {
         return rand.nextInt(board.getRows()); // AAnother function will be needed if the n rows != n columns
     }
@@ -160,6 +177,7 @@ public class GameLogic {
     }
 
     public void reproduce(Human human) {
+        //System.out.println("reproduced");
         Human son = human.reproduce();
         playersArrayList.add(son);
     }
