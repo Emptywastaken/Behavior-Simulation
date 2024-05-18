@@ -65,19 +65,29 @@ public class Human extends Entity {
             int row_moves = row - this.getRow();
             int column_moves = column - this.getColumn();
             currentSpeed = currentSpeed - 1;
-            if (column_moves != 0) { // Randomness needs to be added to the moves
-                if (column_moves < 0) {
-                    nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
-                } else {
-                    nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() + 1);
+
+            if ((row_moves != 0) || (column_moves != 0)) {
+
+                boolean direction = Helper.randomizeMovement(row_moves, column_moves);
+
+                if(direction) {
+                    if (column_moves < 0) {
+                        nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
+                    } else {
+                        nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() + 1);
+                    }
                 }
-            } else if (row_moves != 0) {
-                if (row_moves < 0) {
-                    nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
-                } else {
-                    nextCell = cell.getBoard().getCell(this.getRow() + 1, this.getColumn());
+
+                else{
+                    if (row_moves < 0) {
+                        nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
+                    } else {
+                        nextCell = cell.getBoard().getCell(this.getRow() + 1, this.getColumn());
+                    }
                 }
+
             }
+            
         }
     }
 
