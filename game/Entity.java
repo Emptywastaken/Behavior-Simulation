@@ -1,40 +1,31 @@
 package game;
 
-
-public abstract class Entity {
+public class Entity {
 
 	// reference to current sell
-	private Cell cell;
-
-	//Constructor
-	public Entity(Cell cell)
-	{
+	protected Cell cell;
+	// Constructor
+	public Entity(Cell cell) {
 		this.cell = cell;
-		 // x, y are same as that of the cell.
+
+		// x, y are same as that of the cell.
 	}
-	// removes element from cell
-	public void death() {
-		this.cell.Remove(this);
+	public Cell getCell() {
+		return this.cell;
 	}
-	
-	public int getX(){
-		return cell.getColumn();
+	public int getRow() {
+		return cell.getRow();
 	}
 
-	public int getY(){
-		return cell.getRow();
+	public int getColumn() {
+		return cell.getColumn();
 	}
 
 	public Cell GetCell() {
 		return cell;
 	}
 
-	public void changeCell(Cell newCell){
+	public void ChangeCell(Cell newCell) {
 		cell = newCell;
-		cell.getBoard().MoveElement(this, cell, newCell);
 	}
-	
- 
-
-
 }

@@ -1,65 +1,64 @@
 package game;
 
-
-import java.lang.reflect.Array;
+import java.text.CollationElementIterator;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
-
-                            // any element that "walks" on it whether that is a resource or a player
-                            //TODO update code once player class is created
+// any element that "walks" on it whether that is a resource or a player
 
 public class Cell {
-    private Board BOARD;
+    private final Board BOARD;
     private final int ROW;
     private final int COLUMN;
-    private ArrayList<Entity> elements = new ArrayList<Entity>(); // TODO change the type to object once class is
-                                                                    // created
+    private ArrayList<Human> humans = new ArrayList<>();
+    private boolean food = false;
+    private ArrayList<Cell> neighbourCells = new ArrayList<>(); // neighborhood is only initialized, a method to create
+                                                                // it should be implemented
 
-    Cell(int x, int y) { // Constructor that takes the ROW, column coordinates of the Cell and stores
-                         // them
-        this.ROW = x; // Currently the values are not used but could become useful
-        this.COLUMN = y;
-    }
-    
-    
-
-    public boolean isEmpty(){
-        return this.elements.isEmpty();
+    Cell(int row, int column, Board board) { // Constructor that takes the ROW, column coordinates of the Cell and
+                                             // stores
+        // them
+        this.ROW = row; // Currently the values are not used but could become useful
+        this.COLUMN = column;
+        this.BOARD = board;
     }
 
-    public int AddElement(Entity Element) { // TODO change the type to object once class is created
-        elements.add(Element);
-        return elements.size() - 1; // Array size is returned to store element location in the array
-                                    // A way to keep track of the location after previous elements have been removed
-        // Would need to be added if we decide to keep this structure otherwise bugs
-        // will occur
-    }
-
-    public Entity GetElement(int Element_i) { // Returns the element at position Element_i
-        return elements.get(Element_i);
-    }
-
-    public ArrayList<Entity> getElements() { // Returns the array containing all the elements in the cell
-        return elements;
-    }
-    public void Remove(Entity entity) {
-            elements.remove(entity);
-    }
-
-    // removes by object
-    public void Remove(int Element_i) {
-        if (elements.size() - 1 > Element_i) {
-            elements.remove(Element_i);
+    public void createNeighborhood() {
+        if (ROW == 0) {
+            neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));
+        } else if (ROW == BOARD.getRows() - 1) {
+            neighbourCells.add(BOARD.getCell(ROW - 1, COLUMN));
+        } else {
+            neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));
+            neighbourCells.add(BOARD.getCell(ROW - 1, COLUMN));
         }
-
-    }
-    public int containsFood(){ //checks whether cell contains food.
-        for (int i = 0; i < elements.size(); i ++) {
-            if(elements.get(i) instanceof Food) {
-                return i;
-            }
+        if (COLUMN == 0) {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN + 1));
+        } else if (COLUMN == BOARD.getColumns() - 1) {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN - 1));
+        } else {
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN + 1));
+            neighbourCells.add(BOARD.getCell(ROW, COLUMN - 1));
         }
-        return -1;
+    }
+
+    public ArrayList<Cell> getNeighborhood() {
+        return neighbourCells;
+    }
+
+    public boolean isEmpty() {
+        return this.humans.isEmpty();
+    }
+
+    public void AddHuman(Human human) {
+        humans.add(human);
+    }
+
+    public ArrayList<Human> getHumans() { // Returns the array containing all the elements in the cell
+        return humans;
+    }
+
+    public void RemoveHuman(Human entity) {
+        humans.remove(entity);
     }
 
     public int getRow() {
@@ -70,16 +69,20 @@ public class Cell {
         return COLUMN;
     }
 
-    public int boardWidth() {
-        return BOARD.getColumns();
-    }
-
-    public int boardHeight() {
-        return BOARD.getRows();
-    }
-
     public Board getBoard() {
         return BOARD;
+    }
+
+    public boolean hasFood() {
+        return food;
+    }
+
+    public void foodAdded() {
+        food = true;
+    }
+
+    public void foodRemoved() {
+        food = false;
     }
 
 }

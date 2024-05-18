@@ -1,150 +1,106 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public abstract class Human extends Entity {
-
-    private boolean readyToReplicate = false;
-    private boolean hasFood = false;
-    private int turnsLeft;
-    private final int stregth;
+public class Human extends Entity {
     private final int vision;
     private final int speed;
+    private boolean alive = true;
+    private Cell nextCell = cell;
+    private int currentSpeed;
+    private final int playerType;
 
-    public Human(Cell cell, int vision, int stregth, int turnsLeft, int speed){
+    public Human(Cell cell, int vision, int speed, int playerType) {
         super(cell);
         this.vision = vision;
-        this.stregth = stregth;
-        this.turnsLeft = turnsLeft;
         this.speed = speed;
+        this.currentSpeed = speed;
+        this.playerType = playerType;
     }
 
-    // Pick direction function depends on the character of the human
-    // greedy, generous etc...
-    public abstract Cell pickDirection();
-    public abstract boolean toEat();
-
-    // TODO: consider case when human needs to choose who gets the food.
-    public abstract boolean shareFood(); 
-    
-    // added in case we consider more factors when checking for replication
-    public abstract void replicate();
-    
-    public void move(Cell new_cell) throws OutOfRangeException {
-        int x = super.getX();
-        int y = super.getX();
-        double dist = Helper.getDistance(x, y, new_cell.getColumn(), new_cell.getRow());
-        
-        if(dist > speed) {
-            throw new OutOfRangeException();    
-        }
-        super.changeCell(new_cell);
-    }   
-
-    // returns a list of all cells with foods in the visible radius
-    // TODO check for tuples or smth similar in order to be able to priorities cells by direction 
-    public ArrayList<Cell> foodInVision() {
-        // loops through each cell in the vision radius.
-        
-        int positionX = super.getX();
-        int positionY = super.getY();
-
-        // in order to consider out of range cases.
-        int yStartingPoint = Math.min(positionY-vision, 0);
-        int yEndPoint = Math.max(positionY+vision, this.GetCell().boardHeight());
-        int xStartingPoint = Math.min(positionX-vision, 0);
-        int xEndPoint = Math.max(positionX+vision, this.GetCell().boardWidth());
-
-        Board BOARD = this.GetCell().getBoard();
-        ArrayList<Cell> returnedCells = new ArrayList<Cell>();
-        // need reference to board for this one
-        for (int i = yStartingPoint; i <= yEndPoint; i++) {   
-            for (int j= xStartingPoint; j <= xEndPoint; j++) {
-                Cell cell = BOARD.getCell(i, j);
-
-                if(cell.isEmpty()) {
-                    continue;
-                } if(Helper.getDistance(i, positionX, j, positionY) > vision) {
-                    continue;
-                } if(cell.containsFood() != -1){
-                    returnedCells.add(cell);
-                }     
-            }
-        }
-        return returnedCells;
-    } 
-
-    // returns all neighbouring players
-    public ArrayList<Entity> getNeighboors() {
-
-        int x = super.getX();
-        int y = super.getY();
-
-        Board BOARD = this.GetCell().getBoard();
-        ArrayList<Entity> neighbours = new ArrayList<Entity>();
-        for (int i = y-1; i <= y+1; i++) {
-            for (int j = x-1; j < x; j++) {
-
-                if(i == x & j == y) {
-                    continue;
-                }
-                if(!BOARD.cellInRange(i, j)) {
-                    continue;
-                }
-
-                Cell cell = BOARD.getCell(i, j);
-                if (!cell.isEmpty()) {
-                    for (Entity entitiy : cell.getElements()){
-                        if (entitiy instanceof Human) {
-                            neighbours.add(entitiy);
-                        }
-                    }
-
-                }  
-            }
-        }
-        return neighbours;
-    }
-
-
-    @Override
     public void death() {
-        if(turnsLeft <= 0) {
-            super.death();
-        }
-	}
-    // TODO: randomness eg.(lambda*stregthDiffernce) chance to alternate the outcome.
-    public void attack(Human target){
-        if (this.stregth == target.stregth) {
-            this.decreaseHealth();
-            target.decreaseHealth();
-        } else if (this.stregth > target.stregth) {
-            target.decreaseHealth();
-        } else {
-            this.decreaseHealth();
+        this.Remove();
+        alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void Remove() {
+        cell.RemoveHuman(this);
+    }
+
+    public void moveCell(Cell newCell) {
+        cell.getBoard().MoveElement(this, cell, newCell);
+        this.ChangeCell(newCell);
+    }
+
+    private int getDistance(Cell cell) {
+        int x = Math.abs(cell.getRow() - this.getRow());
+        int y = Math.abs(cell.getColumn() - this.getColumn());
+        return x + y;
+    }
+
+    public void pickMove() {
+        if ((currentSpeed > 0) && (!cell.hasFood())) {
+            ArrayList<Cell> viewFood = cell.getBoard().getFoodVision(this, vision);
+            Cell pickedFood = cell;
+            ArrayList<Cell> foodList = new ArrayList<>();
+            for (int i = 0; i < viewFood.size(); i++) {
+                Cell currentFood = viewFood.get(i);
+
+                if (getDistance(currentFood) < currentSpeed) {
+                    foodList.add(currentFood);
+                }
+            }
+            if (!foodList.isEmpty()) {
+                pickedFood = randomCell(foodList);
+            } else {
+                pickedFood = randomCell(cell.getNeighborhood());
+            }
+            int row = pickedFood.getRow();
+            int column = pickedFood.getColumn();
+            int row_moves = row - this.getRow();
+            int column_moves = column - this.getColumn();
+            currentSpeed = currentSpeed - 1;
+            if (column_moves != 0) { // Randomness needs to be added to the moves
+                if (column_moves < 0) {
+                    nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
+                } else {
+                    nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() + 1);
+                }
+            } else if (row_moves != 0) {
+                if (row_moves < 0) {
+                    nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
+                } else {
+                    nextCell = cell.getBoard().getCell(this.getRow() + 1, this.getColumn());
+                }
+            }
         }
     }
 
-    public void pickFood(){
-        // change player's status and removes food.
-        int foodIndx = super.GetCell().containsFood();
-        if (foodIndx != -1) {
-            this.hasFood = true;
-            this.GetCell().GetElement(foodIndx).death();
-        }
-    }
-    
-    public void decreaseHealth() {
-        this.turnsLeft--;
-        if (turnsLeft<=0){
-            this.death();
-        }
+    public void makeMove() {
+        moveCell(nextCell);
     }
 
-    public void decreaseHealth(int amount) {
-        this.turnsLeft = this.turnsLeft - amount;
-        if(turnsLeft<=0){
-            this.death();
-        }
+    private Cell randomCell(ArrayList<Cell> cellList) {
+        Random rand = new Random();
+        return cellList.get(rand.nextInt(cellList.size()));
+    }
+
+    public void resetSpeed() {
+        currentSpeed = speed;
+    }
+
+    public Human reproduce() {
+        Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, playerType);
+        cell.getBoard().getCell(son.getRow(), son.getColumn()).AddHuman(son);
+        return son;
+    }
+
+    public int getType() {
+        return playerType;
     }
 }
