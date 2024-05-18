@@ -29,7 +29,7 @@ public abstract class Entity {
 		return cell;
 	}
 
-	public void ChangeCell(Cell newCell){
+	public void changeCell(Cell newCell){
 		cell = newCell;
 		cell.getBoard().MoveElement(this, cell, newCell);
 	}

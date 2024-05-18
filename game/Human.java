@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public abstract class Human extends Entity {
 
-     
     private boolean readyToReplicate = false;
     private boolean hasFood = false;
     private int turnsLeft;
     private final int stregth;
     private final int vision;
     private final int speed;
-
 
     public Human(Cell cell, int vision, int stregth, int turnsLeft, int speed){
         super(cell);
@@ -32,7 +30,7 @@ public abstract class Human extends Entity {
     // added in case we consider more factors when checking for replication
     public abstract void replicate();
     
-    public void Move(Cell new_cell) throws OutOfRangeException {
+    public void move(Cell new_cell) throws OutOfRangeException {
         int x = super.getX();
         int y = super.getX();
         double dist = Helper.getDistance(x, y, new_cell.getColumn(), new_cell.getRow());
@@ -40,7 +38,7 @@ public abstract class Human extends Entity {
         if(dist > speed) {
             throw new OutOfRangeException();    
         }
-        super.ChangeCell(new_cell);
+        super.changeCell(new_cell);
     }   
 
     // returns a list of all cells with foods in the visible radius
@@ -116,7 +114,7 @@ public abstract class Human extends Entity {
         }
 	}
     // TODO: randomness eg.(lambda*stregthDiffernce) chance to alternate the outcome.
-    public void Attack(Human target){
+    public void attack(Human target){
         if (this.stregth == target.stregth) {
             this.decreaseHealth();
             target.decreaseHealth();
