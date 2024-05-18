@@ -73,7 +73,7 @@ public class GameLogic {
     private void foodConflict(int indx1, int indx2, ArrayList<Human> conflictList) {
         
         if (indx2 >= conflictList.size()) {
-            // kill all except indx1, indx2 (kills all is indx1, indx2 are out of range) 
+            // kill all except indx1, indx2 (kills all if indx1, indx2 are out of range) 
             deathInConflict(indx1, indx2, conflictList);
             return;
         }
@@ -112,9 +112,6 @@ public class GameLogic {
             }
     }
     
-    
-
-
 
     private void deathFromHunger() {
         // gets all dead players 

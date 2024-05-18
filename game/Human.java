@@ -10,7 +10,7 @@ public class Human extends Entity {
     private Cell nextCell = cell;
     private int currentSpeed;
     private final boolean social;
-    private final Random rand = new Random();
+    private static  final Random rand = new Random();
 
     public Human(Cell cell, int vision, int speed, boolean social) {
         super(cell);
@@ -98,7 +98,6 @@ public class Human extends Entity {
     }
 
     private Cell randomCell(ArrayList<Cell> cellList) {
-        Random rand = new Random();
         return cellList.get(rand.nextInt(cellList.size()));
     }
 
