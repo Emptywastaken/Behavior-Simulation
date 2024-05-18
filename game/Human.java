@@ -68,9 +68,9 @@ public class Human extends Entity {
 
             if ((row_moves != 0) || (column_moves != 0)) {
 
-                boolean direction = Helper.randomizeMovement(row_moves, column_moves);
+                boolean direction = randomizeMovement(row_moves, column_moves);
 
-                if(direction) {
+                if (direction) {
                     if (column_moves < 0) {
                         nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
                     } else {
@@ -78,7 +78,7 @@ public class Human extends Entity {
                     }
                 }
 
-                else{
+                else {
                     if (row_moves < 0) {
                         nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
                     } else {
@@ -87,7 +87,7 @@ public class Human extends Entity {
                 }
 
             }
-            
+
         }
     }
 
@@ -112,5 +112,15 @@ public class Human extends Entity {
 
     public int getType() {
         return playerType;
+    }
+
+    private boolean randomizeMovement(int distanceRows, int distanceColumns) {
+        if (distanceRows == 0) {
+            return true;
+        } else if (distanceColumns == 0) {
+            return false;
+        }
+        Random rand = new Random();
+        return rand.nextBoolean();
     }
 }
