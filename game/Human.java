@@ -9,14 +9,14 @@ public class Human extends Entity {
     private boolean alive = true;
     private Cell nextCell = cell;
     private int currentSpeed;
-    private final int playerType;
+    private final boolean social;
 
-    public Human(Cell cell, int vision, int speed, int playerType) {
+    public Human(Cell cell, int vision, int speed, boolean social) {
         super(cell);
         this.vision = vision;
         this.speed = speed;
         this.currentSpeed = speed;
-        this.playerType = playerType;
+        this.social = social;
     }
 
     public void death() {
@@ -44,52 +44,53 @@ public class Human extends Entity {
     }
 
     public void pickMove() {
-        if ((currentSpeed > 0) && (!cell.hasFood())) {
-            ArrayList<Cell> viewFood = cell.getBoard().getFoodVision(this, vision);
-            Cell pickedFood = cell;
-            ArrayList<Cell> foodList = new ArrayList<>();
-            for (int i = 0; i < viewFood.size(); i++) {
-                Cell currentFood = viewFood.get(i);
-
-                if (getDistance(currentFood) < currentSpeed) {
-                    foodList.add(currentFood);
-                }
-            }
-            if (!foodList.isEmpty()) {
-                pickedFood = randomCell(foodList);
-            } else {
-                pickedFood = randomCell(cell.getNeighborhood());
-            }
-            int row = pickedFood.getRow();
-            int column = pickedFood.getColumn();
-            int row_moves = row - this.getRow();
-            int column_moves = column - this.getColumn();
-            currentSpeed = currentSpeed - 1;
-
-            if ((row_moves != 0) || (column_moves != 0)) {
-
-                boolean direction = Helper.randomizeMovement(row_moves, column_moves);
-
-                if(direction) {
-                    if (column_moves < 0) {
-                        nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
-                    } else {
-                        nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() + 1);
-                    }
-                }
-
-                else{
-                    if (row_moves < 0) {
-                        nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
-                    } else {
-                        nextCell = cell.getBoard().getCell(this.getRow() + 1, this.getColumn());
-                    }
-                }
-
-            }
-            
+        // updates next_cell
+        if ((currentSpeed <= 0) || (cell.hasFood())) {
+            return;
         }
+        // checks for food in the vision radius
+        ArrayList<Cell> viewFood = cell.getBoard().getFoodVision(this, vision);
+        Cell pickedFood = cell;
+        ArrayList<Cell> foodList = new ArrayList<>();
+        for (int i = 0; i < viewFood.size(); i++) {
+            Cell currentFood = viewFood.get(i);
+
+            if (getDistance(currentFood) < currentSpeed) {
+                foodList.add(currentFood);
+            }
+        }
+        if (!foodList.isEmpty()) {
+            pickedFood = randomCell(foodList);
+        } else {
+            pickedFood = randomCell(cell.getNeighborhood());
+        }
+
+        // picks exact move
+        int row = pickedFood.getRow();
+        int column = pickedFood.getColumn();
+        int row_moves = row - this.getRow();
+        int column_moves = column - this.getColumn();
+        currentSpeed = currentSpeed - 1;
+
+        if ((row_moves == 0) && (column_moves == 0)) { 
+            return;
+        }
+        boolean direction = Helper.randomizeMovement(row_moves, column_moves);
+        if (direction) {
+            if (column_moves < 0) {
+                nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() - 1);
+            } else {
+                nextCell = cell.getBoard().getCell(this.getRow(), this.getColumn() + 1);
+            }
+        } else {
+            if (row_moves < 0) {
+                nextCell = cell.getBoard().getCell(this.getRow() - 1, this.getColumn());
+            } else {
+                nextCell = cell.getBoard().getCell(this.getRow() + 1, this.getColumn());
+            }
+        }    
     }
+    
 
     public void makeMove() {
         moveCell(nextCell);
@@ -105,12 +106,12 @@ public class Human extends Entity {
     }
 
     public Human reproduce() {
-        Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, playerType);
+        Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, social);
         cell.getBoard().getCell(son.getRow(), son.getColumn()).AddHuman(son);
         return son;
     }
 
-    public int getType() {
-        return playerType;
+    public boolean isSocial() {
+        return social;
     }
 }
