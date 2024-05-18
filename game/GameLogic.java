@@ -24,9 +24,7 @@ public class GameLogic {
             Human player;
             Cell cell = board.getCell(randomPosition(), randomPosition());
             boolean social = randomTrueFalse();
-            if (social) {
-
-            }
+            updateCounter(social);
             player = new Human(cell, 3, 5, social);
             playersArrayList.add(player);
             board.AddHuman(player, cell);
@@ -115,9 +113,9 @@ public class GameLogic {
     }
 
     private void deathInConflict(int indx1, int indx2, ArrayList<Human> conflictList) {
-        
-        if (indx1 < conflictList.size() & indx2 >= conflictList.size()) {
-                reproducePlayerList.add((conflictList.get(i)));
+
+        if (indx1 < conflictList.size() && indx2 >= conflictList.size()) {
+                reproducePlayerList.add((conflictList.get(indx1)));
         }
         for (int i = 0; i < conflictList.size(); i++) {
             if (i == indx1 || i == indx2) {
@@ -138,6 +136,7 @@ public class GameLogic {
 
     private void finalizeDeath() { //removes dead players from players list and cells' elements list
         for (int i = 0; i < deadPlayerList.size(); i++) {
+            updateCounter(deadPlayerList.get(i).isSocial(), -1);
             deadPlayerList.get(i).death();
             playersArrayList.remove(deadPlayerList.get(i));
         }
@@ -166,6 +165,7 @@ public class GameLogic {
         //System.out.println("init rep" + reproducePlayerList.size());
         for (int i = 0; i < reproducePlayerList.size(); i++) {
             reproduce(reproducePlayerList.get(i));
+            updateCounter(reproducePlayerList.get(i).isSocial());
         }
         
         reproducePlayerList.clear();
@@ -189,4 +189,32 @@ public class GameLogic {
         Human son = human.reproduce();
         playersArrayList.add(son);
     }
+
+    private void updateCounter(boolean isSocial) {
+        if (isSocial) {
+            socialCounter++;
+        } else {
+            greedyCounter++;
+        }
+    }
+    private void updateCounter(boolean isSocial, int inc) {
+        if (isSocial) {
+            socialCounter+=inc;
+        } else {
+            greedyCounter+=inc;
+        }
+    }
+
+    public ArrayList<Integer> getCounters(){
+        ArrayList<Integer> counters = new ArrayList<>();
+        counters.add(socialCounter);
+        counters.add(greedyCounter);
+        return counters;
+    }
+
+    public int getSocial(){
+        return socialCounter;}
+
+    public int getGreedy(){
+        return greedyCounter;}
 }

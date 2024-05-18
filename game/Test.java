@@ -3,7 +3,7 @@ package game;
 public class Test {
     public static void main(String[] args) {
         Board board = new Board(20, 20);
-        GameLogic gl = new GameLogic(board, 5000, 120);
+        GameLogic gl = new GameLogic(board, 5000, 200);
         /* 
         gl.nextTurn();
         System.out.println(gl.getPlayers().size());
@@ -16,9 +16,12 @@ public class Test {
         gl.nextTurn();
         System.out.println(gl.getPlayers().size());
         */
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 200; i++) {
             gl.nextTurn();
-        System.out.println(gl.getPlayers().size());
+            System.out.println(gl.getPlayers().size());
+            if(i%10 == 0) {
+                System.out.println(gl.getCounters());
+            }
         }
     }
 }
