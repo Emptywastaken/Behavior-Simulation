@@ -14,13 +14,20 @@ public class GameLogic {
     private static final Random rand = new Random();
     private static final int MAXSPEED = 6;
 
+    private int greedyCounter = 0;
+    private int socialCounter = 0;
+
     GameLogic(Board board, int initialPlayers, int foodAmount) {
         this.board = board;
         this.FOODCOUNT = foodAmount;
         for (int i = 0; i < initialPlayers; i++) {
             Human player;
             Cell cell = board.getCell(randomPosition(), randomPosition());
-            player = new Human(cell, 3, 5, randomTrueFalse());
+            boolean social = randomTrueFalse();
+            if (social) {
+
+            }
+            player = new Human(cell, 3, 5, social);
             playersArrayList.add(player);
             board.AddHuman(player, cell);
         }
@@ -108,11 +115,12 @@ public class GameLogic {
     }
 
     private void deathInConflict(int indx1, int indx2, ArrayList<Human> conflictList) {
+        
+        if (indx1 < conflictList.size() & indx2 >= conflictList.size()) {
+                reproducePlayerList.add((conflictList.get(i)));
+        }
         for (int i = 0; i < conflictList.size(); i++) {
             if (i == indx1 || i == indx2) {
-                if (i == indx1) {
-                    reproducePlayerList.add((conflictList.get(i)));
-                }
                 continue;
             }
             deadPlayerList.add(conflictList.get(i));

@@ -16,7 +16,7 @@ public class Test {
         gl.nextTurn();
         System.out.println(gl.getPlayers().size());
         */
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             gl.nextTurn();
         System.out.println(gl.getPlayers().size());
         }
