@@ -9,6 +9,8 @@ public class GameLogic {
     private ArrayList<Human> reproducePlayerList = new ArrayList<>();
 
     private final int FOODCOUNT;
+    private final int LOWERBOUND;
+    private final int UPPERBOUND;
     private int currentFood;
     private final Board board;
     private static final Random rand = new Random();
@@ -17,9 +19,27 @@ public class GameLogic {
     private int greedyCounter = 0;
     private int socialCounter = 0;
 
-    GameLogic(Board board, int initialPlayers, int foodAmount) {
+
+    // making volatility optional
+    public GameLogic(Board board, int initialPlayers, int foodAmount) {
+        this(board, initialPlayers, foodAmount, 0.1);
+    }
+
+    GameLogic(Board board, int initialPlayers, int foodAmount, double volatility) {
         this.board = board;
         this.FOODCOUNT = foodAmount;
+        if (volatility < 0) {
+            throw new IllegalArgumentException("Volatility must be non-negative.");
+        }
+        LOWERBOUND = (int) Math.round(FOODCOUNT * (1 - volatility));
+        UPPERBOUND = (int) Math.round(FOODCOUNT * (1 + volatility));
+        populateBoard(initialPlayers);
+        //  No need to store food if we want to keep  it at a fixed amount, if x food is eaten at the end of a turn x food will be added back 
+        currentFood = 0;
+        spawnFood();
+    }
+    // game init, creating players, determining types.
+    private void populateBoard(int initialPlayers){
         for (int i = 0; i < initialPlayers; i++) {
             Human player;
             Cell cell = board.getCell(randomPosition(), randomPosition());
@@ -29,19 +49,8 @@ public class GameLogic {
             playersArrayList.add(player);
             board.AddHuman(player, cell);
         }
-        int i = 0;
-        while (i < FOODCOUNT) {
-            Cell cell = board.getCell(randomPosition(), randomPosition()); // No need to store food if we want to keep
-                                                                           // it at a fixed amount, if x food is eaten
-                                                                           // at the end of a turn x food will be added
-                                                                           // back
-            if (!(cell.hasFood())) {
-                cell.foodAdded();
-                i++;
-            }
-        }
-        currentFood = FOODCOUNT;
     }
+
 
     public void nextTurn() { //key turn logic
         // resets speed for all alive players
@@ -151,7 +160,8 @@ public class GameLogic {
     }
 
     private void spawnFood() { // spawns food 
-        while (currentFood < FOODCOUNT) {
+        int cap = rand.nextInt(LOWERBOUND, UPPERBOUND);
+        while (currentFood < cap) {
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (!(cell.hasFood())) {
                 cell.foodAdded();
@@ -159,6 +169,7 @@ public class GameLogic {
             }
         }
     }
+
 
     private void reproduceAll() {
         //System.out.println("init len" + playersArrayList.size());
