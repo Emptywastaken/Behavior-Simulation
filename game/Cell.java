@@ -1,6 +1,5 @@
 package game;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList; // Class used to define the object the board is made up of, it stores his own position and
 
 // any element that "walks" on it whether that is a resource or a player

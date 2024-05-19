@@ -16,7 +16,7 @@ public class GameUI extends JFrame {
     private Timer timer;
     private static final int MAX_HISTORY_SIZE = 1000;
 
-    public GameUI() {
+    public GameUI(int boardDimension, int playersNumber, int foodAmount) {
         setTitle("Good vs Evil Players");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,8 +40,8 @@ public class GameUI extends JFrame {
         isUpdating = true;
 
         // Timer for updating the counts
-        Board board = new Board(40, 40);
-        GameLogic gl = new GameLogic(board, 1000, 1100);
+        Board board = new Board(boardDimension, boardDimension);
+        GameLogic gl = new GameLogic(board, playersNumber, foodAmount);
 
         // Timer for updating the counts
         timer = new Timer(0, e -> {
@@ -84,7 +84,6 @@ public class GameUI extends JFrame {
             });
         }
 
-        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -147,12 +146,5 @@ public class GameUI extends JFrame {
                 g2d.drawLine(x1, y1Evil, x2, y2Evil);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GameUI ui = new GameUI();
-            ui.setVisible(true);
-        });
     }
 }
