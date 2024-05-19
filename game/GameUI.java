@@ -1,19 +1,19 @@
 package game;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class GameUI extends JFrame {
-    private JLabel goodPlayersLabel;
-    private JLabel evilPlayersLabel;
-    private List<Integer> goodPlayersHistory;
-    private List<Integer> evilPlayersHistory;
+    private final JLabel goodPlayersLabel;
+    private final JLabel evilPlayersLabel;
+    private final List<Integer> goodPlayersHistory;
+    private final List<Integer> evilPlayersHistory;
     private boolean isUpdating;
-    private Timer timer;
+    private final Timer timer;
     private static final int MAX_HISTORY_SIZE = 1000;
 
     public GameUI(int boardDimension, int playersNumber, int foodAmount) {
@@ -77,13 +77,13 @@ public class GameUI extends JFrame {
     class GraphPanel extends JPanel {
         public GraphPanel() {
             addMouseListener(new MouseAdapter() {
-
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     isUpdating = !isUpdating;
                 }
             });
         }
-
+        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
