@@ -1,1 +1,1 @@
-# JAVA2024
+# To run go to Game.java
