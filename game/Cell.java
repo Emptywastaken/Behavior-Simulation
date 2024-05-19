@@ -20,7 +20,7 @@ public class Cell {
         this.COLUMN = column;
         this.BOARD = board;
     }
-
+    // ?? move to constructor and store ??
     public void createNeighborhood() {
         if (ROW == 0) {
             neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));
@@ -82,6 +82,20 @@ public class Cell {
 
     public void foodRemoved() {
         food = false;
+    }
+
+    // temporary 
+    public int getState() {
+        if (isEmpty()) {return Constants.EMPTY;}
+        int s = 0;
+        int gr = 0;
+        for (int i = 0; i < humans.size(); i++) {
+            if(humans.get(i).isSocial()) {
+                s++;
+            } else { gr++;}
+        }
+        if (s>gr){return Constants.BLUE;}
+        else {return Constants.RED;}
     }
 
 }

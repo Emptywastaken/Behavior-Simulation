@@ -1,8 +1,7 @@
 package game;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -16,9 +15,12 @@ public class GameUI extends JFrame {
     private final Timer timer;
     private static final int MAX_HISTORY_SIZE = 1000;
 
+    private final UIBoard UIboard;
+    private final Board board;
+
     public GameUI(int boardDimension, int playersNumber, int foodAmount) {
         setTitle("Good vs Evil Players");
-        setSize(800, 600);
+        setSize(1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -34,22 +36,35 @@ public class GameUI extends JFrame {
         evilPlayersHistory = new ArrayList<>();
 
         GraphPanel graphPanel = new GraphPanel();
+        UIboard = new UIBoard(boardDimension, boardDimension);
+        UIboard.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                isUpdating = !isUpdating;
+            }
+        });
+
+        // Use a GridLayout to ensure equal sizes for graphPanel and UIboard
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+        mainPanel.add(graphPanel);
+        mainPanel.add(UIboard);
+
         add(labelPanel, BorderLayout.NORTH);
-        add(graphPanel, BorderLayout.CENTER);
+        add(mainPanel, BorderLayout.CENTER);
 
         isUpdating = true;
 
-        // Timer for updating the counts
-        Board board = new Board(boardDimension, boardDimension);
+        // Initialize the board
+        this.board = new Board(boardDimension, boardDimension);
         GameLogic gl = new GameLogic(board, playersNumber, foodAmount);
 
-        // Timer for updating the counts
-        timer = new Timer(0, e -> {
+        timer = new Timer(50, e -> {
             if (isUpdating) {
                 int goodPlayers = gl.getSocial();
                 int evilPlayers = gl.getGreedy();
                 gl.nextTurn();
                 updateCounts(goodPlayers, evilPlayers);
+                updateBoard(gl);
             }
         });
 
@@ -57,7 +72,6 @@ public class GameUI extends JFrame {
     }
 
     public void updateCounts(int goodPlayers, int evilPlayers) {
-
         goodPlayersLabel.setText("Good Players: " + goodPlayers);
         evilPlayersLabel.setText("Evil Players: " + evilPlayers);
 
@@ -74,6 +88,19 @@ public class GameUI extends JFrame {
         history.add(value);
     }
 
+    private void updateBoard(GameLogic gl) {
+        // Assume gl provides a way to get the current state of the board
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int col = 0; col < board.getColumns(); col++) {
+                int state = board.getCell(row, col).getState();
+                boolean hasFood = board.getCell(row, col).hasFood();
+                UIboard.setCellState(row, col, state);
+                UIboard.setCellHasFood(row, col, hasFood);
+            }
+        }
+        UIboard.repaint();
+    }
+
     class GraphPanel extends JPanel {
         public GraphPanel() {
             addMouseListener(new MouseAdapter() {
@@ -83,6 +110,7 @@ public class GameUI extends JFrame {
                 }
             });
         }
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -147,4 +175,98 @@ public class GameUI extends JFrame {
             }
         }
     }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            GameUI gameUI = new GameUI(40, 20, 1000); // Example parameters
+            gameUI.setVisible(true);
+        });
+    }
 }
+
+class UIBoard extends JPanel {
+    private int rows;
+    private int cols;
+    private BoardCell[][] cells;
+
+    public UIBoard(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.cells = new BoardCell[rows][cols];
+
+        setLayout(new GridLayout(rows, cols));
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                cells[row][col] = new BoardCell(BoardCell.EMPTY, false);
+                add(cells[row][col]);
+            }
+        }
+    }
+
+    public void setCellState(int row, int col, int state) {
+        if (isValidCell(row, col)) {
+            cells[row][col].setState(state);
+        }
+    }
+
+    public void setCellHasFood(int row, int col, boolean hasFood) {
+        if (isValidCell(row, col)) {
+            cells[row][col].setHasFood(hasFood);
+        }
+    }
+
+    private boolean isValidCell(int row, int col) {
+        return row >= 0 && row < rows && col >= 0 && col < cols;
+    }
+}
+
+class BoardCell extends JPanel {
+    public static final int EMPTY = 0;
+    public static final int RED = 1;
+    public static final int BLUE = 2;
+
+    private int state;
+    private boolean hasFood;
+
+    public BoardCell(int state, boolean hasFood) {
+        this.state = state;
+        this.hasFood = hasFood;
+        setPreferredSize(new Dimension(20, 20));
+    }
+
+    public void setState(int state) {
+        this.state = state;
+        repaint();
+    }
+
+    public void setHasFood(boolean hasFood) {
+        this.hasFood = hasFood;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        switch (state) {
+            case RED:
+                g.setColor(Color.RED);
+                break;
+            case BLUE:
+                g.setColor(Color.BLUE);
+                break;
+            default:
+                g.setColor(Color.WHITE);
+                break;
+        }
+
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        if (hasFood) {
+            g.setColor(Color.GREEN);
+            g.fillOval(getWidth() / 4, getHeight() / 4, getWidth() / 2, getHeight() / 2);
+        }
+    }
+}
+
