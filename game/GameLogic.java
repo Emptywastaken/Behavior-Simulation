@@ -14,8 +14,6 @@ public class GameLogic {
     private int currentFood;
     private final Board board;
     private static final Random rand = new Random();
-    private static final int MAXSPEED = 6;
-
     private int greedyCounter = 0;
     private int socialCounter = 0;
 
@@ -57,7 +55,7 @@ public class GameLogic {
         reset();
         spawnFood();
         //System.out.println("b" + currentFood);
-        for (int i = 0; i < MAXSPEED; i++) { 
+        for (int i = 0; i < Constants.MAXSPEED; i++) { 
             nextSubTurn();
         }
         deathFromHunger();
@@ -160,7 +158,7 @@ public class GameLogic {
     }
 
     private void spawnFood() { // spawns food 
-        int cap = rand.nextInt(LOWERBOUND, UPPERBOUND);
+        int cap = rand.nextInt((UPPERBOUND - LOWERBOUND) + 1) + LOWERBOUND;
         while (currentFood < cap) {
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (!(cell.hasFood())) {
@@ -228,4 +226,6 @@ public class GameLogic {
 
     public int getGreedy(){
         return greedyCounter;}
+
+    
 }

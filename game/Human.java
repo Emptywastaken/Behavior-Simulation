@@ -106,7 +106,7 @@ public class Human extends Entity {
     }
 
     public Human reproduce() {
-        Human son = new Human(randomCell(cell.getNeighborhood()), vision, speed, social);
+        Human son = new Human(randomCell(cell.getNeighborhood()), newGenVision(), newGenSpeed(), social);
         cell.getBoard().getCell(son.getRow(), son.getColumn()).AddHuman(son);
         return son;
     }
@@ -114,6 +114,15 @@ public class Human extends Entity {
     public boolean isSocial() {
         return social;
     }
+
+    private int newGenSpeed() {
+        return Math.max(Math.min(speed-1+rand.nextInt(3), Constants.MAXSPEED),1);
+    }
+
+    private int newGenVision() {
+        return Math.max(Math.min(vision-1+rand.nextInt(3), Constants.MAXVISION),1);
+    }
+
 
     private boolean randomizeMovement(int distanceRows, int distanceColumns) {
         if (distanceRows == 0) {
