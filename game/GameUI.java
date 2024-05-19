@@ -10,8 +10,6 @@ import java.util.List;
 public class GameUI extends JFrame {
     private JLabel goodPlayersLabel;
     private JLabel evilPlayersLabel;
-    private int goodPlayersCount;
-    private int evilPlayersCount;
     private List<Integer> goodPlayersHistory;
     private List<Integer> evilPlayersHistory;
     private boolean isUpdating;
@@ -56,8 +54,6 @@ public class GameUI extends JFrame {
     }
 
     public void updateCounts(int goodPlayers, int evilPlayers) {
-        this.goodPlayersCount = goodPlayers;
-        this.evilPlayersCount = evilPlayers;
         goodPlayersLabel.setText("Good Players: " + goodPlayers);
         evilPlayersLabel.setText("Evil Players: " + evilPlayers);
 
