@@ -5,7 +5,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class UIBoardCell extends JPanel {
-    
+    final  static Color BLUE = new Color(0, 128, 255, 100);
+    final  static Color RED = new Color(255, 51, 51, 100);
 
     private int state;
     private boolean hasFood;
@@ -32,10 +33,10 @@ public class UIBoardCell extends JPanel {
         
         switch (state) {
             case Constants.RED:
-                g.setColor(Color.RED);
+                g.setColor(RED);
                 break;
             case Constants.BLUE:
-                g.setColor(Color.BLUE);
+                g.setColor(BLUE);
                 break;
             case Constants.EMPTY:
             default:
