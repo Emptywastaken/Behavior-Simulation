@@ -48,7 +48,7 @@ public class UIBoardCell extends JPanel {
         
         if (hasFood) {
             g.setColor(Color.GREEN);
-            g.drawRect(0, 0, getWidth()-3, getHeight() - 3);
+            g.drawRect(0, 0, getWidth()-1, getHeight()-1);
         }
     }
 }

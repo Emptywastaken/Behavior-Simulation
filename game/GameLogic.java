@@ -17,6 +17,8 @@ public class GameLogic {
     private int greedyCounter = 0;
     private final int NCELLS;
     private int socialCounter = 0;
+    private double avgSpeed;
+    private double avgVision;
 
 
     // making volatility optional
@@ -55,6 +57,7 @@ public class GameLogic {
     public void nextTurn() { //key turn logic
         // resets speed for all alive players
         reset();
+        updateAverages();
         spawnFood();
         //System.out.println("b" + currentFood);
         for (int i = 0; i < Constants.MAXSPEED; i++) { 
@@ -229,5 +232,25 @@ public class GameLogic {
     public int getGreedy(){
         return greedyCounter;}
 
-    
+    private void updateAverages() {
+        avgSpeed = 0;
+        avgVision = 0;
+        for (int i = 0; i < playersArrayList.size(); i++) {
+            avgSpeed+=playersArrayList.get(i).getSpeed();
+            avgVision+=playersArrayList.get(i).getVision();
+
+        }
+        avgSpeed = avgSpeed / playersArrayList.size();
+        avgVision = avgVision / playersArrayList.size();
+    }
+
+    public double getAverageSpeed(){
+        return avgSpeed;
+    }
+
+    public double getAverageVision() {
+        return avgVision;
+    }
+
+
 }

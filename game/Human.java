@@ -123,6 +123,13 @@ public class Human extends Entity {
         return Math.max(Math.min(vision-1+rand.nextInt(3), Constants.MAXVISION),1);
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getVision() {
+        return vision;
+    }
 
     private boolean randomizeMovement(int distanceRows, int distanceColumns) {
         if (distanceRows == 0) {
