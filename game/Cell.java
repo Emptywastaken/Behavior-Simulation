@@ -20,7 +20,6 @@ public class Cell {
         this.COLUMN = column;
         this.BOARD = board;
     }
-    // ?? move to constructor and store ??
     public void createNeighborhood() {
         if (ROW == 0) {
             neighbourCells.add(BOARD.getCell(ROW + 1, COLUMN));

@@ -15,6 +15,7 @@ public class GameLogic {
     private final Board board;
     private static final Random rand = new Random();
     private int greedyCounter = 0;
+    private final int NCELLS;
     private int socialCounter = 0;
 
 
@@ -26,6 +27,7 @@ public class GameLogic {
     GameLogic(Board board, int initialPlayers, int foodAmount, double volatility) {
         this.board = board;
         this.FOODCOUNT = foodAmount;
+        this.NCELLS = board.getColumns() * board.getRows();
         if (volatility < 0) {
             throw new IllegalArgumentException("Volatility must be non-negative.");
         }
@@ -158,7 +160,7 @@ public class GameLogic {
     }
 
     private void spawnFood() { // spawns food 
-        int cap = rand.nextInt((UPPERBOUND - LOWERBOUND) + 1) + LOWERBOUND;
+        int cap = Math.min(NCELLS, rand.nextInt((UPPERBOUND - LOWERBOUND) + 1) + LOWERBOUND);
         while (currentFood < cap) {
             Cell cell = board.getCell(randomPosition(), randomPosition());
             if (!(cell.hasFood())) {

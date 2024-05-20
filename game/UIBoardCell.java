@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class UIBoardCell extends JPanel {
-    final  static Color BLUE = new Color(0, 128, 255, 100);
-    final  static Color RED = new Color(255, 51, 51, 100);
+    final  static Color BLUE = new Color(0, 128, 255, 220);
+    final  static Color RED = new Color(255, 51, 51, 220);
 
     private int state;
     private boolean hasFood;
