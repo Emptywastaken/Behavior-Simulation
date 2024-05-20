@@ -9,6 +9,8 @@ import javax.swing.*;
 public class GameUI extends JFrame {
     private final JLabel goodPlayersLabel;
     private final JLabel evilPlayersLabel;
+    private final JLabel averageSpeedLabel;
+    private final JLabel averageVisionLabel;
     private final List<Integer> goodPlayersHistory;
     private final List<Integer> evilPlayersHistory;
     private final List<Double> averageSpeedHistory;
@@ -32,11 +34,15 @@ public class GameUI extends JFrame {
 
         goodPlayersLabel = new JLabel("Good Players: 0");
         evilPlayersLabel = new JLabel("Evil Players: 0");
-
+        averageSpeedLabel = new JLabel("Average Speed: 0");
+        averageVisionLabel = new JLabel("Average Vision: 0");
+        
         JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new GridLayout(1, 2));
+        labelPanel.setLayout(new GridLayout(1, 4));
         labelPanel.add(goodPlayersLabel);
         labelPanel.add(evilPlayersLabel);
+        labelPanel.add(averageSpeedLabel);
+        labelPanel.add(averageVisionLabel);
 
         goodPlayersHistory = new ArrayList<>();
         evilPlayersHistory = new ArrayList<>();
@@ -52,7 +58,7 @@ public class GameUI extends JFrame {
             }
         });
 
-        // Use a GridLayout to ensure equal sizes for graphPanel and UIboard
+        // equal sizes for graphPanel and UIboard
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
         mainPanel.add(graphPanel);
         mainPanel.add(UIboard);
@@ -84,6 +90,8 @@ public class GameUI extends JFrame {
     public void updateCounts(int goodPlayers, int evilPlayers, double averageSpeed, double averageVision) {
         goodPlayersLabel.setText("Good Players: " + goodPlayers);
         evilPlayersLabel.setText("Evil Players: " + evilPlayers);
+        averageSpeedLabel.setText(Constants.LABELSPEED + String.format("%.2f", averageSpeed));
+        averageVisionLabel.setText(Constants.LABELVISION + String.format("%.2f", averageVision));
 
         addValueToHistory(goodPlayersHistory, goodPlayers);
         addValueToHistory(evilPlayersHistory, evilPlayers);
@@ -101,7 +109,7 @@ public class GameUI extends JFrame {
     }
 
     private void updateBoard() {
-        // Assume gl provides a way to get the current state of the board
+       // updates board
         for (int row = 0; row < board.getRows(); row++) {
             for (int col = 0; col < board.getColumns(); col++) {
                 int state = board.getCell(row, col).getState();

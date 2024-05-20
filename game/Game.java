@@ -2,7 +2,7 @@ package game;
 
 public class Game {
     public static void main(String[] args) {
-        GameUI ui = new GameUI(40, 20, 1000, 0.15);
+        GameUI ui = new GameUI(100, 1000, 7000, 0.4);
         ui.setVisible(true);
     }
 }
