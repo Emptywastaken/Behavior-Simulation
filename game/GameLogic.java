@@ -22,13 +22,18 @@ public class GameLogic {
 
 
     // making volatility optional
+    
+    public GameLogic(Board board, int initialPlayers, int foodAmount, double volatility) {
+        this(board, initialPlayers, foodAmount, 0.1, 30);
+    }
     public GameLogic(Board board, int initialPlayers, int foodAmount) {
-        this(board, initialPlayers, foodAmount, 0.1);
+        this(board, initialPlayers, foodAmount, 0.1, 30);
     }
 
-    GameLogic(Board board, int initialPlayers, int foodAmount, double volatility) {
+    GameLogic(Board board, int initialPlayers, int foodAmount, double volatility, int speed) {
         this.board = board;
         this.FOODCOUNT = foodAmount;
+        Constants.MAXSPEED = speed;
         this.NCELLS = board.getColumns() * board.getRows();
         if (volatility < 0) {
             throw new IllegalArgumentException("Volatility must be non-negative.");

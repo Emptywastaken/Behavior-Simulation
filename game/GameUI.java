@@ -23,10 +23,16 @@ public class GameUI extends JFrame {
     private final Board board;
 
     public GameUI(int boardDimension, int playersNumber, int foodAmount) {
-        this(boardDimension, playersNumber, foodAmount, 0.1);
+        this(boardDimension, playersNumber, foodAmount, 0.1, 30);
+    }
+    public GameUI(int boardDimension, int playersNumber, int foodAmount, double volatility) {
+        this(boardDimension, playersNumber, foodAmount, volatility, 30);
+    }
+    public GameUI(int boardDimension, int playersNumber, int foodAmount, int speed) {
+        this(boardDimension, playersNumber, foodAmount, 0.1, speed);
     }
 
-    public GameUI(int boardDimension, int playersNumber, int foodAmount, double volatility) {
+    public GameUI(int boardDimension, int playersNumber, int foodAmount, double volatility, int speed) {
         setTitle("Good vs Evil Players");
         setSize(1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +76,7 @@ public class GameUI extends JFrame {
 
         // Initialize the board
         this.board = new Board(boardDimension, boardDimension);
-        GameLogic gl = new GameLogic(board, playersNumber, foodAmount, volatility);
+        GameLogic gl = new GameLogic(board, playersNumber, foodAmount, volatility, speed);
 
         timer = new Timer(50, e -> {
             if (isUpdating) {
