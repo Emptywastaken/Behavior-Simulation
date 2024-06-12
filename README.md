@@ -1,6 +1,8 @@
 # To run go to Game.java
 
 # Idea
+The core idea is to observe how different initial conditions and environmental factors, such as food availability and volatility, impact the overall system. Observing which type of behaviour is thriving under different conditions, finding population balance. By adjusting initailization parameters, the simulation explores the emergence of social vs. greedy behaviors, changes in player's characteristics, competition and cooperation simulate evolutionary processes as behaviors adapt in response to environmental pressures.
+
 # Structure
   ## Evolution
   #### The evolution simulation is driven by the mechanisms of reproduction and natural selection, mirroring fundamental evolution processes. Players on the board reproduce, generating offspring with inherited traits that vary within predetermined range. The environment, including food availability and competition, imposes pressure that influence player's survival and reproduction.
