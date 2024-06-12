@@ -1,7 +1,7 @@
 package game;
 
 public class Constants {
-    public static final int MAXSPEED = 15; 
+    public static final int MAXSPEED = 100;
     public static final int MAXVISION = 6;
 
     public static final int EMPTY = 0;

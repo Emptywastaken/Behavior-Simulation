@@ -53,4 +53,3 @@ Additionally, the UI enables interaction with the simulation by allowing users t
   ![Alt text](images/abundance.png?raw=true "Abundance")
   * Effect of Volatility: Starting from the equilibrium case and testing different values of volatility reveals that the change in population is much sharper. Higher volatility rates tend to favor social players, suggesting that unpredictable environmental changes can amplify the advantage of social behaviors in securing resources.
   ![Alt text](images/volatility.png?raw=true "Volatility")
-  * Stabilization of Speed: Despite being limited to 15, speed always stabilizes before reaching its limit. It tends to lower values when the food rate is high and higher values when it is low or volatility is high. This suggests that speed adapts to environmental conditions, with players adjusting their speed based on resource availability and environmental stability.
