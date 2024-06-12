@@ -5,7 +5,7 @@
 
 # Structure
   ## Evolution
-  #### The evolution simulation is driven by the mechanisms of reproduction and natural selection, mirroring fundamental evolution processes. Players on the board reproduce, generating offspring with inherited traits that vary within predetermined range. The environment, including food availability and competition, imposes pressure that influence player's survival and reproduction.
+  The evolution simulation is driven by the mechanisms of reproduction and natural selection, mirroring fundamental evolution processes. Players on the board reproduce, generating offspring with inherited traits that vary within predetermined range. The environment, including food availability and competition, imposes pressure that influence player's survival and reproduction.
 
 ### Reproduction Process
 
@@ -38,7 +38,7 @@ At the begginig we initiate: the board, the number of initial players, amount of
 This cyclical process continues, with the game state evolving based on player interactions, resource availability, and player attributes. During execution the set of statistics is tracked, it contains the number of social and greedy players and  an average speed and vision, providing insights into the simulation's dynamics. The structure of the simulation in a self-sustaining and adaptive system where players must navigate survival and competition.
   ## User Interface
 
-  #### The purpose of the UI is to provide a clear and intuitive way to visualize the dynamics of the system. By displaying real-time statistics such as the number of social and greedy players, average speed, and average vision, the UI allows users to easily monitor the key metrics that indicate the behavior of the population. The graphical representation of these statistics, along with the board visualization, helps users understand players' interactions and trends over time.
+The purpose of the UI is to provide a clear and intuitive way to visualize the dynamics of the system. By displaying real-time statistics such as the number of social and greedy players, average speed, and average vision, the UI allows users to easily monitor the key metrics that indicate the behavior of the population. The graphical representation of these statistics, along with the board visualization, helps users understand players' interactions and trends over time.
 
 Additionally, the UI enables interaction with the simulation by allowing users to pause and resume updates, providing ability to analyze specific moment in detail. The historical data graphs enable users to track changes and patterns over extended periods, making it easier to see the impact of different initial conditions and environmental changes on the population's evolution. 
 # Observations
