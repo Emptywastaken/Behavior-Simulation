@@ -15,7 +15,8 @@ Reproduction occurs when a player consume entire unit of food without sharing. T
 
 Natural selection in this simulation is implemented through competition and survival challenges. Players must find food to survive, leading to conflicts when multiple players encounter the same food source. The conflict resolution process determines which players get to eat and which are marked for death, mimicking competitive exclusion. Players that fail to secure food are removed from the game, simulating death from starvation. This selective pressure ensures that only the fittest players—those who are better at finding food and avoiding conflicts—survive and reproduce.
 Players with advantageous traits are more likely to survive and reproduce, leading to a gradual adaptation of the population to the environment. This dynamic system reflects natural evolutionary processes, where environmental pressures and genetic variation shape the development of species.
-
+#### Social Behavior Dynamics
+In the simulation, social players share food, ensuring mutual survival but no reproduction, maintaining their numbers without increasing them. When a social player meets a greedy player, the greedy player consumes all the food, reproduces, and the social player dies. If two greedy players compete for food, both die due to conflict, limiting their population. This dynamic creates a balance between social and greedy behaviors, with cooperation and competition fluctuating based on environmental pressures and resources.
   ## Player & Board initiation
   The initialization process in the simulation involves setting up the board and populating it with players. The Board class is responsible for creating a grid structure with a specified number of rows and columns. Each cell in this grid is instantiated as a Cell object and stored in a two-dimensional array. During the board's construction, each cell is linked to its neighbors, establishing a network that facilitates player movement and interaction. 
   
@@ -42,3 +43,14 @@ The purpose of the UI is to provide a clear and intuitive way to visualize the d
 
 Additionally, the UI enables interaction with the simulation by allowing users to pause and resume updates, providing ability to analyze specific moment in detail. The historical data graphs enable users to track changes and patterns over extended periods, making it easier to see the impact of different initial conditions and environmental changes on the population's evolution. 
 # Observations
+  * Equilibrium at 65% Food: Without considering volatility, when the food covers 65% of the board, there exists an equilibrium state. This suggests a balance in the population dynamics where neither social nor greedy behaviors dominate.
+  ![Alt text](images/equilibrium.png?raw=true "Equilibrium")
+  * Impact of Food Percentage: Increasing the food percentage favors greedy players, while decreasing it favors social players. This indicates that food availability directly influences the prevalence of different behaviors within the population.
+  
+  Graph when food is around 30% of board
+  ![Alt text](images/scarcity.png?raw=true "Scarcity")
+  Graph when food is around 90% of board
+  ![Alt text](images/abundance.png?raw=true "Abundance")
+  * Effect of Volatility: Starting from the equilibrium case and testing different values of volatility reveals that the change in population is much sharper. Higher volatility rates tend to favor social players, suggesting that unpredictable environmental changes can amplify the advantage of social behaviors in securing resources.
+  ![Alt text](images/volatility.png?raw=true "Volatility")
+  * Stabilization of Speed: Despite being limited to 15, speed always stabilizes before reaching its limit. It tends to lower values when the food rate is high and higher values when it is low or volatility is high. This suggests that speed adapts to environmental conditions, with players adjusting their speed based on resource availability and environmental stability.
