@@ -7,7 +7,7 @@
 
 ### Reproduction Process
 
-Reproduction occurs when a player consume entire unit of food without sharing. The `reproduce` method creates a new player, or offspring, in a neighboring cell of the parent. This offspring inherits the parent's traits, such as vision and speed with variation to stimulate evolution. The social behavior of the offspring is directly inherited from the parent, maintaining the parent's social or greedy nature.
+Reproduction occurs when a player consume entire unit of food without sharing. The `reproduce` method creates a new player, or offspring, in a neighboring cell of the parent. This offspring inherits the parent's traits, such as vision and speed with variation to enforce evolution. The social behavior of the offspring is directly inherited from the parent, maintaining the parent's social or greedy nature.
 
 ### Natural Selection
 
@@ -15,11 +15,10 @@ Natural selection in this simulation is implemented through competition and surv
 Players with advantageous traits are more likely to survive and reproduce, leading to a gradual adaptation of the population to the environment. This dynamic system reflects natural evolutionary processes, where environmental pressures and genetic variation shape the development of species.
 
   ## Player & Board initiation
-  The initialization process in the simulation involves setting up the board and populating it with players. The Board class is responsible for creating a grid structure with a specified number of rows and columns. Each cell in this grid is instantiated as a Cell object and stored in a two-dimensional array. During the board's construction, each cell is linked to its neighbors, establishing a network that facilitates player movement and interaction.
-
-Within the GameLogic class, the board and initial game conditions are set through its constructor. The constructor initializes the board, determines the food count, calculates food volatility bounds, and calls the populateBoard method to introduce the initial players. This method creates players with specific attributes, such as vision, speed, and social behavior. Each player is assigned to a randomly selected cell on the board. The method employs a loop to generate the desired number of players, determining each player's social nature randomly and updating internal counters to keep track of social and greedy players.
-
-The populateBoard method demonstrates how players are placed on the board. For each player, a random cell is selected, and a new Human object is created with defined attributes (e.g., vision of 3, speed of 5). The player's social nature is randomly decided using the randomTrueFalse method. This player is then added to the players' list and placed on the corresponding cell using the AddHuman method of the Board class. This setup ensures a diverse and unpredictable initial state, setting the stage for the game's dynamics as players begin interacting with their environment and each other.
+  The initialization process in the simulation involves setting up the board and populating it with players. The Board class is responsible for creating a grid structure with a specified number of rows and columns. Each cell in this grid is instantiated as a Cell object and stored in a two-dimensional array. During the board's construction, each cell is linked to its neighbors, establishing a network that facilitates player movement and interaction. 
+  
+  For each player, a random cell is selected, and a new Human object is created with defined attributes (e.g., vision of 3, speed of 5). The player's social nature is decided randomly. This player is then added to the players' list and placed on the corresponding cell. This setup ensures a diverse and unpredictable initial state, setting the stage for the game's dynamics as players begin interacting with their environment and each other.
+  
   ## Gamelogic
   #### The simulation's structure is centered around managing a dynamic ecosystem on a board where human players interact with each other and their environment. The primary components of this structure include the players, the board, the food spawn dynamics.
 
