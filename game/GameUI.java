@@ -17,7 +17,7 @@ public class GameUI extends JFrame {
     private final List<Double> averageVisionHistory;
     private boolean isUpdating;
     private final Timer timer;
-    private static final int MAX_HISTORY_SIZE = 1000;
+    private static final int MAX_HISTORY_SIZE = 400;
 
     private final UIBoard UIboard;
     private final Board board;
